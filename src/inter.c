@@ -685,7 +685,29 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 
     memset(core->skip_emvr_mode, 0, sizeof(core->skip_emvr_mode));
 
+	FILE* pfile;
+	char draft[500];
+	pfile = fopen("cost_test.txt", "w");
+	if (pfile == NULL){
+		printf("cannot open pfile\n");
+		fclose(pfile);
+	}
+	char tmpstr[20];
+	strcat(draft, "num_cands_woUMVE:");
+	sprintf(tmpstr, "%d\t", num_cands_woUMVE);
+	strcat(draft, tmpstr);
+
+	int test_umve_flag = 0;
+
     for (int skip_idx = 0; skip_idx < num_rdo; skip_idx++) {
+		strcat(draft, "mode:");
+		sprintf(tmpstr, "%d\t", mode_list[skip_idx]);
+		strcat(draft, tmpstr);
+
+		strcat(draft, "cost:");
+		sprintf(tmpstr, "%d\t", cost_list[skip_idx]);
+		strcat(draft, tmpstr);
+
         if (info->rmv_skip_candi_by_satd && core->inter_satd != COM_UINT64_MAX && cost_list[skip_idx] > core->inter_satd * core->satd_threshold) {
 			break;
 		}
@@ -694,6 +716,8 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
         if (mode < num_cands_woUMVE) {
             cur_info->umve_flag = 0;
             cur_info->skip_idx = mode;
+
+			test_umve_flag = 1;
         } else {
             cur_info->umve_flag = 1;
             cur_info->umve_idx = mode - num_cands_woUMVE;
@@ -735,6 +759,13 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
             core->skip_emvr_mode[emvr_idx] = cost_skip < cost_dir;
         }
     }
+
+	strcat(draft, "\n\n");
+	if (test_umve_flag == 1) {
+		fwrite(draft, 1, sizeof(draft), pfile);
+	}
+	fclose(pfile);
+
     return best_skip_idx;
 }
 
