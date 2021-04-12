@@ -685,7 +685,6 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 
     memset(core->skip_emvr_mode, 0, sizeof(core->skip_emvr_mode));
 
-	printf("num_cands_woUMVE:%d\t", num_cands_woUMVE);
 	int test_umve_flag = 0;
 
     for (int skip_idx = 0; skip_idx < num_rdo; skip_idx++) {
