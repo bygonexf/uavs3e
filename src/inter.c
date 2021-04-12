@@ -689,8 +689,6 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	int test_umve_flag = 0;
 
     for (int skip_idx = 0; skip_idx < num_rdo; skip_idx++) {
-		printf("[mode:%d, cost:%u]\t", mode_list[skip_idx], cost_list[skip_idx]);
-
         if (info->rmv_skip_candi_by_satd && core->inter_satd != COM_UINT64_MAX && cost_list[skip_idx] > core->inter_satd * core->satd_threshold) {
 			break;
 		}
@@ -699,11 +697,15 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
         if (mode < num_cands_woUMVE) {
             cur_info->umve_flag = 0;
             cur_info->skip_idx = mode;
-
-			test_umve_flag = 1;
         } else {
             cur_info->umve_flag = 1;
             cur_info->umve_idx = mode - num_cands_woUMVE;
+
+			int umve_i = mode - num_cands_woUMVE;
+			int base_i = (umve_i) / 20;
+			int step_i = (umve_i - base_i * 20) / 4;
+			int dir_i = umve_i - base_i * 20 - step_i * 4;
+			printf("[base:%d, step:%d, dir:%d | skip_i:%d, cost: %u]\t", base_i, step_i, dir_i, skip_idx, cost_list[skip_idx]);
         }
 
         CP32(cur_info->mv[REFP_0], pmv_cands[mode][REFP_0]);
@@ -743,9 +745,6 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
         }
     }
 
-	if (test_umve_flag == 1) {
-		printf("--------");
-	}
 	printf("\n\n");
 
     return best_skip_idx;
