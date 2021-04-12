@@ -615,6 +615,43 @@ static void derive_inter_cands(core_t *core, s16(*pmv_cands)[REFP_NUM][MV_D], s8
 
             com_get_mvp_default(core->ptr, core->cu_scup_in_pic, REFP_1, 0, map->map_mv, map->map_refi, core->refp,
                                 0, core->cu_width, core->cu_height, info->i_scu, pmv_cands[num_cands][REFP_1], map->map_scu);
+
+			s32 change_x = pmv_cands[0][REFP_1][MV_X] - pmv_cands[0][REFP_0][MV_X];
+			s32 change_y = pmv_cands[0][REFP_1][MV_Y] - pmv_cands[0][REFP_0][MV_Y];
+			int dir_pred = -1;
+			if (change_x > 0 && change_y > 0) {
+				if (change_x > change_y) {
+					dir_pred = 0;
+				}
+				else {
+					dir_pred = 2;
+				}
+			}
+			if (change_x > 0 && change_y < 0) {
+				if (change_x > change_y) {
+					dir_pred = 0;
+				}
+				else {
+					dir_pred = 3;
+				}
+			}
+			if (change_x < 0 && change_y > 0) {
+				if (change_x > change_y) {
+					dir_pred = 1;
+				}
+				else {
+					dir_pred = 2;
+				}
+			}
+			if (change_x < 0 && change_y < 0) {
+				if (change_x > change_y) {
+					dir_pred = 1;
+				}
+				else {
+					dir_pred = 3;
+				}
+			}
+			printf("--dir_pred:%d--\t", dir_pred);
         } else {
             get_col_mv(core->refp[0], core->ptr, scup_co, pmv_cands[num_cands]);
         }
