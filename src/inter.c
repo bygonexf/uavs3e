@@ -687,7 +687,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 
 	FILE* pfile;
 	char draft[500];
-	pfile = fopen("cost_test.txt", "w");
+	pfile = fopen("cost_test.txt", "a");
 	if (pfile == NULL){
 		printf("cannot open pfile\n");
 		fclose(pfile);

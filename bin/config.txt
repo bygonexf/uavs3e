@@ -1,5 +1,5 @@
 #======== File I/O ===============================
-input                   : g:\\seqs\avs2\BasketballDrive_1920x1080_50.yuv     # (MANDATORY) file name of input video
+input                   : /root/video_coding/SocialOutdoor_640x360_15.yuv     # (MANDATORY) file name of input video
 width                   : 1920                             # (MANDATORY) pixel width of input video
 height                  : 1080                             # (MANDATORY) pixel height of input video
 fps_num                 : 50                              # (MANDATORY) frame rate (Hz), numerator
