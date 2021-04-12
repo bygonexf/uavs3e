@@ -1,5 +1,5 @@
 #======== File I/O ===============================
-input                   : /mnt/c/Users/dream/Desktop/deepl/uavs3e/SocialOutdoor_640x360_15.yuv     # (MANDATORY) file name of input video
+input                   : /mnt/c/Users/dream/Desktop/deepl/SocialOutdoor_640x360_15.yuv     # (MANDATORY) file name of input video
 width                   : 1920                             # (MANDATORY) pixel width of input video
 height                  : 1080                             # (MANDATORY) pixel height of input video
 fps_num                 : 50                              # (MANDATORY) frame rate (Hz), numerator
