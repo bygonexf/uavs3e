@@ -760,10 +760,11 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
         }
     }
 
-	strcat(draft, "\n\n");
 	if (test_umve_flag == 1) {
-		fwrite(draft, 1, sizeof(draft), pfile);
+		strcat(draft, "------------");
 	}
+	strcat(draft, "\n\n");
+	fputs(draft, pfile);
 	fclose(pfile);
 
     return best_skip_idx;
