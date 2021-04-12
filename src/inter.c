@@ -685,28 +685,11 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 
     memset(core->skip_emvr_mode, 0, sizeof(core->skip_emvr_mode));
 
-	FILE* pfile;
-	char draft[500];
-	pfile = fopen("cost_test.txt", "a");
-	if (pfile == NULL){
-		printf("cannot open pfile\n");
-		fclose(pfile);
-	}
-	char tmpstr[20];
-	strcat(draft, "num_cands_woUMVE:");
-	sprintf(tmpstr, "%d\t", num_cands_woUMVE);
-	strcat(draft, tmpstr);
-
+	printf("num_cands_woUMVE:%d\t", num_cands_woUMVE);
 	int test_umve_flag = 0;
 
     for (int skip_idx = 0; skip_idx < num_rdo; skip_idx++) {
-		strcat(draft, "mode:");
-		sprintf(tmpstr, "%d\t", mode_list[skip_idx]);
-		strcat(draft, tmpstr);
-
-		strcat(draft, "cost:");
-		sprintf(tmpstr, "%d\t", cost_list[skip_idx]);
-		strcat(draft, tmpstr);
+		printf("[mode:%d, cost:%u]\t", mode_list[skip_idx], cost_list[skip_idx]);
 
         if (info->rmv_skip_candi_by_satd && core->inter_satd != COM_UINT64_MAX && cost_list[skip_idx] > core->inter_satd * core->satd_threshold) {
 			break;
@@ -761,11 +744,9 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
     }
 
 	if (test_umve_flag == 1) {
-		strcat(draft, "------------");
+		printf("--------");
 	}
-	strcat(draft, "\n\n");
-	fputs(draft, pfile);
-	fclose(pfile);
+	printf("\n\n");
 
     return best_skip_idx;
 }
