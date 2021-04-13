@@ -691,7 +691,7 @@ static void derive_inter_cands(core_t *core, s16(*pmv_cands)[REFP_NUM][MV_D], s8
 
 	
 	int ii;
-	for (ii = 0; ii < 4; ++ii) {
+	for (ii = 0; ii < 11; ++ii) {
 		printf("ii:%d\n", ii);
 		printf("p[i][r0][x]:%d,p[i][r0][y]:%d,p[i][r1][x]:%d,p[i][r1][y]:%d,", pmv_cands[ii][0][0], pmv_cands[ii][0][1], pmv_cands[ii][1][0], pmv_cands[ii][1][1]);
 		printf("ref[i][r0]:%d,ref[i][r1]:%d\n", refi_cands[ii][0], refi_cands[ii][1]);
