@@ -616,6 +616,7 @@ static void derive_inter_cands(core_t *core, s16(*pmv_cands)[REFP_NUM][MV_D], s8
             com_get_mvp_default(core->ptr, core->cu_scup_in_pic, REFP_1, 0, map->map_mv, map->map_refi, core->refp,
                                 0, core->cu_width, core->cu_height, info->i_scu, pmv_cands[num_cands][REFP_1], map->map_scu);
 
+			/*
 			s16 change_x = pmv_cands[0][REFP_1][MV_X] - pmv_cands[0][REFP_0][MV_X];
 			s16 change_y = pmv_cands[0][REFP_1][MV_Y] - pmv_cands[0][REFP_0][MV_Y];
 			printf("change_x:%d,change_y:%d ", change_x, change_y);
@@ -653,6 +654,8 @@ static void derive_inter_cands(core_t *core, s16(*pmv_cands)[REFP_NUM][MV_D], s8
 				}
 			}
 			printf("--dir_pred:%d--\t", dir_pred);
+			*/
+
         } else {
             get_col_mv(core->refp[0], core->ptr, scup_co, pmv_cands[num_cands]);
         }
@@ -685,6 +688,14 @@ static void derive_inter_cands(core_t *core, s16(*pmv_cands)[REFP_NUM][MV_D], s8
         get_hmvp_skip_cands(motion_cands_curr, cnt_hmvp_extend, pmv_cands, refi_cands);
         num_cands = cnt_hmvp_cands_curr;
     }
+
+	
+	int ii;
+	for (ii = 0; ii < 3; ++ii) {
+		printf("ii:%d\n", ii);
+		printf("p[i][r0][x]:%d,p[i][r0][y]:%d,p[i][r1][x]:%d,p[i][r1][y]:%d,", pmv_cands[ii][0][0], pmv_cands[ii][0][1], pmv_cands[ii][1][0], pmv_cands[ii][1][1]);
+		printf("ref[i][r0]:%d,ref[i][r1]:%d\n", refi_cands[ii][0], refi_cands[ii][1]);
+	}
 
     *num_cands_woUMVE = num_cands;
     if (info->sqh.umve_enable) {
