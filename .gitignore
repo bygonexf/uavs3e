@@ -53,3 +53,4 @@ dkms.conf
 /~$ogGuide.docx
 /build/x86_windows
 /build/linux
+*.pc
