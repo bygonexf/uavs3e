@@ -117,7 +117,21 @@ static int make_cand_list(core_t *core, int *mode_list, u64 *cost_list, int num_
         bit_cnt = lbac_get_bits(&lbac_temp) - bit_cnt;
         cost += core->sqrt_lambda[0] * bit_cnt;
 
-        while (shift < num_rdo && cost < cost_list[num_rdo - 1 - shift]) {
+		if (skip_idx < num_cands_woUMVE) {
+			printf("skip_i:%d,cost:%f\t", skip_idx, cost);
+		}
+		else {
+			int umve_i = skip_idx - num_cands_woUMVE;
+			int base_i = (umve_i) / 20;
+			int step_i = (umve_i - base_i * 20) / 4;
+			int dir_i = umve_i - base_i * 20 - step_i * 4;
+			printf("dir:%d,cost:%f\t", dir_i, cost);
+		}
+		if (skip_idx == (num_cands_all - 1)) {
+			printf("\n");
+		}
+		
+		while (shift < num_rdo && cost < cost_list[num_rdo - 1 - shift]) {
             shift++;
         }
         if (shift != 0) {
