@@ -87,6 +87,9 @@ static int make_cand_list(core_t *core, int *mode_list, u64 *cost_list, int num_
 
     cur_info->cu_mode = MODE_SKIP;
 
+	int pred_best_umve_dir = -1;
+	int umve_dir = -1;
+
     for (int i = 0; i < num_rdo; i++) {
         mode_list[i] = 0;
         cost_list[i] = COM_UINT64_MAX;
@@ -102,10 +105,20 @@ static int make_cand_list(core_t *core, int *mode_list, u64 *cost_list, int num_
         } else {
             cur_info->umve_flag = 1;
             cur_info->umve_idx = skip_idx - num_cands_woUMVE;
+
+			umve_dir = cur_info->umve_idx % 4;
+			/*
+			if (pred_best_umve_dir >= 0 && umve_dir != pred_best_umve_dir) {
+				continue;
+			}
+			*/
         }
         if ((slice_type == SLICE_P) && (cur_info->skip_idx == 1 || cur_info->skip_idx == 2) && (cur_info->umve_flag == 0)) {
             continue;
         }
+
+		if (cur_info->umve_flag) 
+
         com_mc_cu(x, y, info->pic_width, info->pic_height, cu_width, cu_height, refi_skip_cand[skip_idx], pmv_skip_cand[skip_idx], core->refp, cur_info->pred, cu_width, CHANNEL_L, bit_depth);
         
         double cost = com_had(cu_width, cu_height, y_org, pic_org->stride_luma, cur_info->pred[Y_C], cu_width, bit_depth);
@@ -141,6 +154,11 @@ static int make_cand_list(core_t *core, int *mode_list, u64 *cost_list, int num_
             }
             mode_list[num_rdo - shift] = skip_idx;
             cost_list[num_rdo - shift] = (u64)cost;
+
+			if (cur_info->umve_flag && pred_best_umve_dir < 0) {
+				pred_best_umve_dir = umve_dir;
+				printf("---pred_dir:%d----\t", pred_best_umve_dir);
+			}
         }
     }
 
@@ -704,12 +722,14 @@ static void derive_inter_cands(core_t *core, s16(*pmv_cands)[REFP_NUM][MV_D], s8
     }
 
 	
+	/*
 	int ii;
 	for (ii = 0; ii < 11; ++ii) {
 		printf("ii:%d\n", ii);
 		printf("p[i][r0][x]:%d,p[i][r0][y]:%d,p[i][r1][x]:%d,p[i][r1][y]:%d,", pmv_cands[ii][0][0], pmv_cands[ii][0][1], pmv_cands[ii][1][0], pmv_cands[ii][1][1]);
 		printf("ref[i][r0]:%d,ref[i][r1]:%d\n", refi_cands[ii][0], refi_cands[ii][1]);
 	}
+	*/
 
     *num_cands_woUMVE = num_cands;
     if (info->sqh.umve_enable) {
