@@ -107,7 +107,7 @@ static int make_cand_list(core_t *core, int *mode_list, u64 *cost_list, int num_
             cur_info->umve_idx = skip_idx - num_cands_woUMVE;
 
 			cur_umve_dir = cur_info->umve_idx % 4;
-			if (pred_umve_dir >= 0 && cur_umve_dir != pred_umve_dir) {
+			if ((pred_umve_dir >= 0 && cur_umve_dir != pred_umve_dir) || (cur_info->umve_idx >= UMVE_MAX_REFINE_NUM && pred_umve_dir < 0)) {
 				continue;
 			}
         }
