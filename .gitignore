@@ -50,3 +50,8 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+/~$ogGuide.docx
+/build/x86_windows
+/build/linux
+*.pc
