@@ -787,7 +787,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 			int base_i = (umve_i) / 20;
 			int step_i = (umve_i - base_i * 20) / 4;
 			int dir_i = umve_i - base_i * 20 - step_i * 4;
-			printf("[base:%d, step:%d, dir:%d | skip_i:%d, cost: %u]\t", base_i, step_i, dir_i, skip_idx, cost_list[skip_idx]);
+			printf("[base:%d, step:%d, dir:%d | skip_i:%d, satd: %u]|", base_i, step_i, dir_i, skip_idx, cost_list[skip_idx]);
         }
 
         CP32(cur_info->mv[REFP_0], pmv_cands[mode][REFP_0]);
@@ -816,6 +816,8 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
             min_cost = cost_skip;
             best_skip_idx = skip_idx;
         }
+
+		printf("skip_rd:%f,direct_rd:%f\t", cost_skip, cost_dir);
 
 		if (cost_dir == core->cost_best || cost_skip == core->cost_best) {
 			core->inter_satd = cost_list[skip_idx];
