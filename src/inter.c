@@ -840,7 +840,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	// printf("\n best_skip_idx:%d", best_skip_idx);
 	// printf("\n\n");
 
-	printf("cu_width:%d,", 1 << core->cu_width_log2);
+	printf("\ncu_width:%d,", 1 << core->cu_width_log2);
 	printf("cu_height:%d,", 1 << core->cu_height_log2);
 	for (int i = 0; i < num_rdo; ++i) {
 		double gamma = (float)cost_list[0] / cost_list[i];
