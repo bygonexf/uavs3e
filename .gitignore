@@ -54,3 +54,4 @@ dkms.conf
 /build/x86_windows
 /build/linux
 *.pc
+config.txt

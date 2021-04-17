@@ -818,7 +818,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
             best_skip_idx = skip_idx;
         }
 
-		printf("**skip_idx:%d**,skip_rd:%lf,direct_rd:%lf\t", skip_idx, cost_skip, cost_dir);
+		printf("**skip_idx:%d**,skip_rd:%lf,direct_rd:%lf\n", skip_idx, cost_skip, cost_dir);
 
 		if (cost_dir == core->cost_best || cost_skip == core->cost_best) {
 			core->inter_satd = cost_list[skip_idx];
