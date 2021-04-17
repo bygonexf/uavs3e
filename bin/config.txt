@@ -1,10 +1,11 @@
 #======== File I/O ===============================
-input                   : /mnt/c/Users/dream/Desktop/deepl/SocialOutdoor_640x360_15.yuv     # (MANDATORY) file name of input video
-width                   : 1920                             # (MANDATORY) pixel width of input video
-height                  : 1080                             # (MANDATORY) pixel height of input video
+input                   : /root/video_coding/seq/d/BlowingBubbles_416x240_50.yuv     # (MANDATORY) file name of input video
+width                   : 416                             # (MANDATORY) pixel width of input video
+height                  : 240                             # (MANDATORY) pixel height of input video
 fps_num                 : 50                              # (MANDATORY) frame rate (Hz), numerator
 fps_den                 : 1                               # (MANDATORY) frame rate (Hz), denominator
 input_bit_depth         : 8                               # (MANDATORY) input_bit_depth
-frames                  : 17                              # maximum number of frames to be encoded
+frames                  : 50                              # maximum number of frames to be encoded
 output                  : str.bin                         # file name of output bitstream
 recon                   : rec.yuv                         # file name of reconstructed video
+qp                      :27
