@@ -130,6 +130,7 @@ static int make_cand_list(core_t *core, int *mode_list, u64 *cost_list, int num_
         bit_cnt = lbac_get_bits(&lbac_temp) - bit_cnt;
         cost += core->sqrt_lambda[0] * bit_cnt;
 
+		/*
 		if (skip_idx < num_cands_woUMVE) {
 			printf("skip_i:%d,cost:%f\t", skip_idx, cost);
 		}
@@ -142,7 +143,7 @@ static int make_cand_list(core_t *core, int *mode_list, u64 *cost_list, int num_
 		}
 		if (skip_idx == (num_cands_all - 1)) {
 			printf("\n");
-		}
+		}*/
 		
 		while (shift < num_rdo && cost < cost_list[num_rdo - 1 - shift]) {
             shift++;
@@ -157,7 +158,7 @@ static int make_cand_list(core_t *core, int *mode_list, u64 *cost_list, int num_
 
 			if (cur_info->umve_flag && pred_best_umve_dir < 0) {
 				pred_best_umve_dir = umve_dir;
-				printf("---pred_dir:%d----\t", pred_best_umve_dir);
+				// printf("---pred_dir:%d----\t", pred_best_umve_dir);
 			}
         }
     }
@@ -787,7 +788,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 			int base_i = (umve_i) / 20;
 			int step_i = (umve_i - base_i * 20) / 4;
 			int dir_i = umve_i - base_i * 20 - step_i * 4;
-			printf("[base:%d, step:%d, dir:%d | skip_i:%d, satd: %u]|", base_i, step_i, dir_i, skip_idx, cost_list[skip_idx]);
+			printf("[base:%d, step:%d, dir:%d]", base_i, step_i, dir_i);
         }
 
         CP32(cur_info->mv[REFP_0], pmv_cands[mode][REFP_0]);
@@ -817,7 +818,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
             best_skip_idx = skip_idx;
         }
 
-		printf("skip_rd:%f,direct_rd:%f\t", cost_skip, cost_dir);
+		printf("**skip_idx:%d**,skip_rd:%lf,direct_rd:%lf\t", skip_idx, cost_skip, cost_dir);
 
 		if (cost_dir == core->cost_best || cost_skip == core->cost_best) {
 			core->inter_satd = cost_list[skip_idx];
@@ -829,6 +830,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
         }
     }
 
+	printf("\n best_skip_idx:%d", best_skip_idx);
 	printf("\n\n");
 
     return best_skip_idx;
