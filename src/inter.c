@@ -850,6 +850,9 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 			has = 1;
 		}
 		printf("has:%d", has);
+		if (i != num_rdo - 1) {
+			printf(",");
+		}
 	}
 	printf("\n");
 
