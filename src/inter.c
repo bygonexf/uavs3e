@@ -772,7 +772,11 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	int test_umve_flag = 0;
 
     for (int skip_idx = 0; skip_idx < num_rdo; skip_idx++) {
-        if (info->rmv_skip_candi_by_satd && core->inter_satd != COM_UINT64_MAX && cost_list[skip_idx] > core->inter_satd * core->satd_threshold) {
+        /*
+		if (info->rmv_skip_candi_by_satd && core->inter_satd != COM_UINT64_MAX && cost_list[skip_idx] > core->inter_satd * core->satd_threshold) {
+			break;
+		}*/
+		if (info->rmv_skip_candi_by_satd && core->inter_satd != COM_UINT64_MAX) {
 			break;
 		}
         int mode = mode_list[skip_idx];
@@ -784,11 +788,12 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
             cur_info->umve_flag = 1;
             cur_info->umve_idx = mode - num_cands_woUMVE;
 
+			/*
 			int umve_i = mode - num_cands_woUMVE;
 			int base_i = (umve_i) / 20;
 			int step_i = (umve_i - base_i * 20) / 4;
 			int dir_i = umve_i - base_i * 20 - step_i * 4;
-			printf("[base:%d, step:%d, dir:%d]", base_i, step_i, dir_i);
+			printf("[base:%d, step:%d, dir:%d]", base_i, step_i, dir_i);*/
         }
 
         CP32(cur_info->mv[REFP_0], pmv_cands[mode][REFP_0]);
@@ -818,11 +823,12 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
             best_skip_idx = skip_idx;
         }
 
-		printf("**skip_idx:%d**,skip_rd:%lf,direct_rd:%lf\n", skip_idx, cost_skip, cost_dir);
+		// printf("**skip_idx:%d**,skip_rd:%lf,direct_rd:%lf\n", skip_idx, cost_skip, cost_dir);
 
+		/*
 		if (cost_dir == core->cost_best || cost_skip == core->cost_best) {
 			core->inter_satd = cost_list[skip_idx];
-		}
+		}*/
         int emvr_idx = mode - TRADITIONAL_SKIP_NUM;
 
         if (!cur_info->umve_flag && emvr_idx >= 0 && emvr_idx <= 4) {
@@ -830,8 +836,21 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
         }
     }
 
-	printf("\n best_skip_idx:%d", best_skip_idx);
-	printf("\n\n");
+	// printf("\n best_skip_idx:%d", best_skip_idx);
+	// printf("\n\n");
+
+	printf("cu_width:%d,", 1 << core->cu_width_log2);
+	printf("cu_height:%d,", 1 << core->cu_height_log2);
+	for (int i = 0; i < num_rdo; ++i) {
+		double gamma = (float)cost_list[0] / cost_list[i];
+		printf("gamma:%.2f,", gamma);
+		int has = 0;
+		if (best_skip_idx <= i) {
+			has = 1;
+		}
+		printf("has:%d\n", has);
+	}
+
 
     return best_skip_idx;
 }
@@ -1972,6 +1991,7 @@ void analyze_inter_cu(core_t *core, lbac_t *lbac_best)
     int num_hmvp_inter     = MAX_NUM_MVR;
     int num_amvr           = MAX_NUM_MVR;
     int allow_affine       = info->sqh.affine_enable;
+
 
     init_pb_part(cur_info);
     init_tb_part(cur_info);
