@@ -87,9 +87,6 @@ static int make_cand_list(core_t *core, int *mode_list, u64 *cost_list, int num_
 
     cur_info->cu_mode = MODE_SKIP;
 
-	int cur_umve_dir = -1;
-	int pred_umve_dir = -1;
-
     for (int i = 0; i < num_rdo; i++) {
         mode_list[i] = 0;
         cost_list[i] = COM_UINT64_MAX;
@@ -105,11 +102,6 @@ static int make_cand_list(core_t *core, int *mode_list, u64 *cost_list, int num_
         } else {
             cur_info->umve_flag = 1;
             cur_info->umve_idx = skip_idx - num_cands_woUMVE;
-
-			cur_umve_dir = cur_info->umve_idx % 4;
-			if ((pred_umve_dir >= 0 && cur_umve_dir != pred_umve_dir) || (cur_info->umve_idx >= UMVE_MAX_REFINE_NUM && pred_umve_dir < 0)) {
-				continue;
-			}
         }
         if ((slice_type == SLICE_P) && (cur_info->skip_idx == 1 || cur_info->skip_idx == 2) && (cur_info->umve_flag == 0)) {
             continue;
@@ -135,10 +127,6 @@ static int make_cand_list(core_t *core, int *mode_list, u64 *cost_list, int num_
             }
             mode_list[num_rdo - shift] = skip_idx;
             cost_list[num_rdo - shift] = (u64)cost;
-
-			if (cur_info->umve_flag && pred_umve_dir < 0) {
-				pred_umve_dir = cur_umve_dir;
-			}
         }
     }
 
@@ -697,6 +685,8 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 
     memset(core->skip_emvr_mode, 0, sizeof(core->skip_emvr_mode));
 
+	int umve_skip_dir = -1;
+
     for (int skip_idx = 0; skip_idx < num_rdo; skip_idx++) {
         if (info->rmv_skip_candi_by_satd && core->inter_satd != COM_UINT64_MAX && cost_list[skip_idx] > core->inter_satd * core->satd_threshold) {
 			break;
@@ -724,19 +714,29 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
         s64 dist[2][N_C] = { 0 };
         s64 dist_pred[N_C] = { 0 };
 
-        cur_info->cu_mode = MODE_DIR;
-        double cost_dir  = inter_rdcost(core, lbac_best, 0, 1, dist, dist_pred);
-        if (cost_dir < min_cost) {
-            min_cost = cost_dir;
-            best_skip_idx = skip_idx;
-        }
+		double cost_dir = MAX_D_COST;
+		if (!cur_info->umve_flag || umve_skip_dir == 1) {
+			cur_info->cu_mode = MODE_DIR;
+			cost_dir = inter_rdcost(core, lbac_best, 0, 1, dist, dist_pred);
+			if (cost_dir < min_cost) {
+				min_cost = cost_dir;
+				best_skip_idx = skip_idx;
+			}
+		}
 
-        cur_info->cu_mode = MODE_SKIP;
-        double cost_skip = inter_rdcost(core, lbac_best, 1, 0, dist, dist_pred);
-        if (cost_skip < min_cost) {
-            min_cost = cost_skip;
-            best_skip_idx = skip_idx;
-        }
+		double cost_skip = MAX_D_COST;
+		if (!cur_info->umve_flag || umve_skip_dir == 0) {
+			cur_info->cu_mode = MODE_SKIP;
+			cost_skip = inter_rdcost(core, lbac_best, 1, 0, dist, dist_pred);
+			if (cost_skip < min_cost) {
+				min_cost = cost_skip;
+				best_skip_idx = skip_idx;
+			}
+		}
+
+		if (umve_skip_dir < 0 && cur_info->umve_flag && cost_skip != MAX_D_COST && cost_dir != MAX_D_COST) {
+			umve_skip_dir = (cost_skip < cost_dir ? 0 : 1);
+		}
 
 		if (cost_dir == core->cost_best || cost_skip == core->cost_best) {
 			core->inter_satd = cost_list[skip_idx];
