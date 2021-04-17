@@ -848,8 +848,9 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 		if (best_skip_idx <= i) {
 			has = 1;
 		}
-		printf("has:%d\n", has);
+		printf("has:%d", has);
 	}
+	printf("\n");
 
 
     return best_skip_idx;
