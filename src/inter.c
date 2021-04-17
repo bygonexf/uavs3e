@@ -763,9 +763,10 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 
     num_rdo = make_cand_list(core, mode_list, cost_list, num_cands_woUMVE, num_cands_all, num_rdo, pmv_cands, refi_cands);
 
-    if (history->visit_mode_decision && info->history_skip_idx) {
+    /*
+	if (history->visit_mode_decision && info->history_skip_idx) {
         num_rdo = COM_MIN(num_rdo, history->skip_idx_history + 3);
-    }
+    }*/
 
     memset(core->skip_emvr_mode, 0, sizeof(core->skip_emvr_mode));
 
