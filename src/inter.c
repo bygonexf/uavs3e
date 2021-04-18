@@ -87,9 +87,6 @@ static int make_cand_list(core_t *core, int *mode_list, u64 *cost_list, int num_
 
     cur_info->cu_mode = MODE_SKIP;
 
-	int pred_best_umve_dir = -1;
-	int umve_dir = -1;
-
     for (int i = 0; i < num_rdo; i++) {
         mode_list[i] = 0;
         cost_list[i] = COM_UINT64_MAX;
@@ -106,7 +103,6 @@ static int make_cand_list(core_t *core, int *mode_list, u64 *cost_list, int num_
             cur_info->umve_flag = 1;
             cur_info->umve_idx = skip_idx - num_cands_woUMVE;
 
-			umve_dir = cur_info->umve_idx % 4;
 			/*
 			if (pred_best_umve_dir >= 0 && umve_dir != pred_best_umve_dir) {
 				continue;
@@ -155,11 +151,6 @@ static int make_cand_list(core_t *core, int *mode_list, u64 *cost_list, int num_
             }
             mode_list[num_rdo - shift] = skip_idx;
             cost_list[num_rdo - shift] = (u64)cost;
-
-			if (cur_info->umve_flag && pred_best_umve_dir < 0) {
-				pred_best_umve_dir = umve_dir;
-				// printf("---pred_dir:%d----\t", pred_best_umve_dir);
-			}
         }
     }
 
@@ -840,6 +831,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	// printf("\n best_skip_idx:%d", best_skip_idx);
 	// printf("\n\n");
 
+	/*
 	printf("\ncu_width:%d,", 1 << core->cu_width_log2);
 	printf("cu_height:%d,", 1 << core->cu_height_log2);
 	for (int i = 0; i < num_rdo; ++i) {
@@ -854,7 +846,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 			printf(",");
 		}
 	}
-	printf("\n");
+	printf("\n");*/
 
 
     return best_skip_idx;
