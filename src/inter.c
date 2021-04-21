@@ -691,16 +691,20 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 
     num_rdo = make_cand_list(core, mode_list, cost_list, num_cands_woUMVE, num_cands_all, num_rdo, pmv_cands, refi_cands);
 
-    if (history->visit_mode_decision && info->history_skip_idx) {
+    /*
+	if (history->visit_mode_decision && info->history_skip_idx) {
         num_rdo = COM_MIN(num_rdo, history->skip_idx_history + 3);
     }
+	*/
 
     memset(core->skip_emvr_mode, 0, sizeof(core->skip_emvr_mode));
 
     for (int skip_idx = 0; skip_idx < num_rdo; skip_idx++) {
-        if (info->rmv_skip_candi_by_satd && core->inter_satd != COM_UINT64_MAX && cost_list[skip_idx] > core->inter_satd * core->satd_threshold) {
+        /*
+		if (info->rmv_skip_candi_by_satd && core->inter_satd != COM_UINT64_MAX && cost_list[skip_idx] > core->inter_satd * core->satd_threshold) {
 			break;
 		}
+		*/
         int mode = mode_list[skip_idx];
 
         if (mode < num_cands_woUMVE) {
@@ -747,7 +751,24 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
             core->skip_emvr_mode[emvr_idx] = cost_skip < cost_dir;
         }
     }
-    return best_skip_idx;
+    
+	printf("\ncu_width:%d,", 1 << core->cu_width_log2);
+	printf("cu_height:%d,", 1 << core->cu_height_log2);
+	for (int i = 0; i < num_rdo; ++i) {
+		float gamma = (float)cost_list[0] / cost_list[i];
+		printf("gamma:%.2f,", gamma);
+		int has = 0;
+		if (best_skip_idx <= i) {
+			has = 1;
+		}
+		printf("has:%d", has);
+		if (i != num_rdo - 1) {
+			printf(",");
+		}
+	}
+	printf("\n");
+	
+	return best_skip_idx;
 }
 
 static void analyze_affine_merge(core_t *core, lbac_t *lbac_best)
