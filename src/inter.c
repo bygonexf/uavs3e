@@ -752,6 +752,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
         }
     }
     
+	/*
 	printf("\ncu_width:%d,", 1 << core->cu_width_log2);
 	printf("cu_height:%d,", 1 << core->cu_height_log2);
 	for (int i = 0; i < num_rdo; ++i) {
@@ -767,6 +768,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 		}
 	}
 	printf("\n");
+	*/
 	
 	return best_skip_idx;
 }
