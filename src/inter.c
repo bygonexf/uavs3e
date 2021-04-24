@@ -714,7 +714,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 		satd_ratio_threshold = 0.99;
 	}
 	*/
-	float satd_ratio_threshold = 0.945
+	float satd_ratio_threshold = 0.945;
 
     for (int skip_idx = 0; skip_idx < num_rdo; skip_idx++) {
         /*
