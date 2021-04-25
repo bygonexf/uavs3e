@@ -701,9 +701,10 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 
     memset(core->skip_emvr_mode, 0, sizeof(core->skip_emvr_mode));
 
-	/*
+	
 	float satd_ratio_threshold;
 	int cu_size_log2 = core->cu_width_log2 + core->cu_height_log2;
+	/*
 	if (cu_size_log2 <= 7) {
 		satd_ratio_threshold = 0.983;
 	}
@@ -714,7 +715,35 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 		satd_ratio_threshold = 0.99;
 	}
 	*/
-	float satd_ratio_threshold = 0.945;
+	if (cu_size_log2 == 6) {
+		satd_ratio_threshold = 0.934;
+	}
+	else if (cu_size_log2 == 7) {
+		satd_ratio_threshold = 0.95;
+	}
+	else if (cu_size_log2 == 8) {
+		satd_ratio_threshold = 0.959;
+	}
+	else if (cu_size_log2 == 9) {
+		satd_ratio_threshold = 0.965;
+	}
+	else if (cu_size_log2 == 10) {
+		satd_ratio_threshold = 0.97;
+	}
+	else if (cu_size_log2 == 11) {
+		satd_ratio_threshold = 0.9715;
+	}
+	else if (cu_size_log2 == 12) {
+		satd_ratio_threshold = 0.9725;
+	}
+	else if (cu_size_log2 == 13) {
+		satd_ratio_threshold = 0.9736;
+	}
+	else if (cu_size_log2 == 14) {
+		satd_ratio_threshold = 0.9747;
+	}
+	
+	// float satd_ratio_threshold = 0.945;
 
     for (int skip_idx = 0; skip_idx < num_rdo; skip_idx++) {
         /*
