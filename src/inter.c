@@ -704,7 +704,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	
 	float satd_ratio_threshold = 0.945;
 	int cu_size_log2 = core->cu_width_log2 + core->cu_height_log2;
-	/*
+	
 	if (cu_size_log2 <= 7) {
 		satd_ratio_threshold = 0.983;
 	}
@@ -714,7 +714,8 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	else {
 		satd_ratio_threshold = 0.99;
 	}
-	*/
+	
+	/*
 	if (cu_size_log2 == 6) {
 		satd_ratio_threshold = 0.909;
 	}
@@ -742,6 +743,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	else if (cu_size_log2 == 14) {
 		satd_ratio_threshold = 0.967;
 	}
+	*/
 	
 	// float satd_ratio_threshold = 0.945;
 
