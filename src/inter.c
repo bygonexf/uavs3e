@@ -716,31 +716,31 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	}
 	*/
 	if (cu_size_log2 == 6) {
-		satd_ratio_threshold = 0.934;
+		satd_ratio_threshold = 0.909;
 	}
 	else if (cu_size_log2 == 7) {
-		satd_ratio_threshold = 0.95;
+		satd_ratio_threshold = 0.933;
 	}
 	else if (cu_size_log2 == 8) {
-		satd_ratio_threshold = 0.959;
+		satd_ratio_threshold = 0.947;
 	}
 	else if (cu_size_log2 == 9) {
-		satd_ratio_threshold = 0.965;
+		satd_ratio_threshold = 0.955;
 	}
 	else if (cu_size_log2 == 10) {
-		satd_ratio_threshold = 0.97;
+		satd_ratio_threshold = 0.96;
 	}
 	else if (cu_size_log2 == 11) {
-		satd_ratio_threshold = 0.9715;
+		satd_ratio_threshold = 0.963;
 	}
 	else if (cu_size_log2 == 12) {
-		satd_ratio_threshold = 0.9725;
+		satd_ratio_threshold = 0.9648;
 	}
 	else if (cu_size_log2 == 13) {
-		satd_ratio_threshold = 0.9736;
+		satd_ratio_threshold = 0.9658;
 	}
 	else if (cu_size_log2 == 14) {
-		satd_ratio_threshold = 0.9747;
+		satd_ratio_threshold = 0.967;
 	}
 	
 	// float satd_ratio_threshold = 0.945;
