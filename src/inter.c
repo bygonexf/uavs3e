@@ -704,7 +704,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	
 	float satd_ratio_threshold = 0.945;
 	int cu_size_log2 = core->cu_width_log2 + core->cu_height_log2;
-	
+	/*
 	if (cu_size_log2 <= 7) {
 		satd_ratio_threshold = 0.983;
 	}
@@ -714,36 +714,36 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	else {
 		satd_ratio_threshold = 0.99;
 	}
+	*/
 	
-	/*
 	if (cu_size_log2 == 6) {
-		satd_ratio_threshold = 0.909;
+		satd_ratio_threshold = 0.898;
 	}
 	else if (cu_size_log2 == 7) {
-		satd_ratio_threshold = 0.933;
+		satd_ratio_threshold = 0.925;
 	}
 	else if (cu_size_log2 == 8) {
-		satd_ratio_threshold = 0.947;
+		satd_ratio_threshold = 0.94;
 	}
 	else if (cu_size_log2 == 9) {
-		satd_ratio_threshold = 0.955;
+		satd_ratio_threshold = 0.95;
 	}
 	else if (cu_size_log2 == 10) {
-		satd_ratio_threshold = 0.96;
+		satd_ratio_threshold = 0.956;
 	}
 	else if (cu_size_log2 == 11) {
-		satd_ratio_threshold = 0.963;
+		satd_ratio_threshold = 0.959;
 	}
 	else if (cu_size_log2 == 12) {
-		satd_ratio_threshold = 0.9648;
+		satd_ratio_threshold = 0.9608;
 	}
 	else if (cu_size_log2 == 13) {
-		satd_ratio_threshold = 0.9658;
+		satd_ratio_threshold = 0.9623;
 	}
 	else if (cu_size_log2 == 14) {
-		satd_ratio_threshold = 0.967;
+		satd_ratio_threshold = 0.963;
 	}
-	*/
+	
 	
 	// float satd_ratio_threshold = 0.945;
 
