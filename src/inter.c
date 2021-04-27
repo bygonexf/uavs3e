@@ -690,6 +690,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
     assert(num_rdo <= COM_MIN(MAX_INTER_SKIP_RDO, TRADITIONAL_SKIP_NUM + info->sqh.num_of_hmvp));
 
 	int cu_size_log2 = core->cu_width_log2 + core->cu_height_log2;
+	/*
 	if (cu_size_log2 == 6) {
 		num_rdo = 8;
 	}
@@ -702,6 +703,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	else {
 		num_rdo = 5;
 	}
+	*/
 	
 	num_rdo = make_cand_list(core, mode_list, cost_list, num_cands_woUMVE, num_cands_all, num_rdo, pmv_cands, refi_cands);
 
@@ -729,49 +731,49 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 		satd_ratio_threshold = 0.99;
 	}
 	*/
-	/*
+	
 	if (cu_size_log2 == 6) {
-		satd_ratio_threshold = 0.898;
-	}
-	else if (cu_size_log2 == 7) {
-		satd_ratio_threshold = 0.925;
-	}
-	else if (cu_size_log2 == 8) {
-		satd_ratio_threshold = 0.94;
-	}
-	else if (cu_size_log2 == 9) {
-		satd_ratio_threshold = 0.95;
-	}
-	else if (cu_size_log2 == 10) {
-		satd_ratio_threshold = 0.956;
-	}
-	else if (cu_size_log2 == 11) {
 		satd_ratio_threshold = 0.959;
 	}
+	else if (cu_size_log2 == 7) {
+		satd_ratio_threshold = 0.9675;
+	}
+	else if (cu_size_log2 == 8) {
+		satd_ratio_threshold = 0.973;
+	}
+	else if (cu_size_log2 == 9) {
+		satd_ratio_threshold = 0.9767;
+	}
+	else if (cu_size_log2 == 10) {
+		satd_ratio_threshold = 0.9788;
+	}
+	else if (cu_size_log2 == 11) {
+		satd_ratio_threshold = 0.9796;
+	}
 	else if (cu_size_log2 == 12) {
-		satd_ratio_threshold = 0.9608;
+		satd_ratio_threshold = 0.9807;
 	}
 	else if (cu_size_log2 == 13) {
-		satd_ratio_threshold = 0.9623;
+		satd_ratio_threshold = 0.9815;
 	}
 	else if (cu_size_log2 == 14) {
-		satd_ratio_threshold = 0.963;
+		satd_ratio_threshold = 0.9819;
 	}
-	*/
+	
 	
 	// float satd_ratio_threshold = 0.945;
 
     for (int skip_idx = 0; skip_idx < num_rdo; skip_idx++) {
-        
+        /*
 		if (info->rmv_skip_candi_by_satd && core->inter_satd != COM_UINT64_MAX && cost_list[skip_idx] > core->inter_satd * core->satd_threshold) {
 			break;
 		}
+		*/
 		
-		/*
 		if (skip_idx > 0 && cost_list[skip_idx] * satd_ratio_threshold > cost_list[0]) {
 			break;
 		}
-		*/
+		
         int mode = mode_list[skip_idx];
 
         if (mode < num_cands_woUMVE) {
