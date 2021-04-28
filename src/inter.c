@@ -690,7 +690,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
     assert(num_rdo <= COM_MIN(MAX_INTER_SKIP_RDO, TRADITIONAL_SKIP_NUM + info->sqh.num_of_hmvp));
 
 	int cu_size_log2 = core->cu_width_log2 + core->cu_height_log2;
-	
+	/*
 	if (cu_size_log2 == 6) {
 		num_rdo = 9;
 	}
@@ -700,7 +700,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	else {
 		num_rdo = 7;
 	}
-	
+	*/
 	
 	num_rdo = make_cand_list(core, mode_list, cost_list, num_cands_woUMVE, num_cands_all, num_rdo, pmv_cands, refi_cands);
 
@@ -728,49 +728,49 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 		satd_ratio_threshold = 0.99;
 	}
 	*/
-	/*
+	
 	if (cu_size_log2 == 6) {
-		satd_ratio_threshold = 0.95;
+		satd_ratio_threshold = 0.959;
 	}
 	else if (cu_size_log2 == 7) {
-		satd_ratio_threshold = 0.96;
+		satd_ratio_threshold = 0.9655;
 	}
 	else if (cu_size_log2 == 8) {
-		satd_ratio_threshold = 0.968;
+		satd_ratio_threshold = 0.974;
 	}
 	else if (cu_size_log2 == 9) {
-		satd_ratio_threshold = 0.9727;
+		satd_ratio_threshold = 0.976;
 	}
 	else if (cu_size_log2 == 10) {
-		satd_ratio_threshold = 0.9755;
+		satd_ratio_threshold = 0.98;
 	}
 	else if (cu_size_log2 == 11) {
-		satd_ratio_threshold = 0.9773;
-	}
-	else if (cu_size_log2 == 12) {
-		satd_ratio_threshold = 0.978;
-	}
-	else if (cu_size_log2 == 13) {
-		satd_ratio_threshold = 0.9785;
-	}
-	else if (cu_size_log2 == 14) {
 		satd_ratio_threshold = 0.979;
 	}
-	*/
+	else if (cu_size_log2 == 12) {
+		satd_ratio_threshold = 0.98;
+	}
+	else if (cu_size_log2 == 13) {
+		satd_ratio_threshold = 0.975;
+	}
+	else if (cu_size_log2 == 14) {
+		satd_ratio_threshold = 0.983;
+	}
+	
 	
 	// float satd_ratio_threshold = 0.945;
 
     for (int skip_idx = 0; skip_idx < num_rdo; skip_idx++) {
-        
+        /*
 		if (info->rmv_skip_candi_by_satd && core->inter_satd != COM_UINT64_MAX && cost_list[skip_idx] > core->inter_satd * core->satd_threshold) {
 			break;
 		}
+		*/
 		
-		/*
 		if (skip_idx > 0 && cost_list[skip_idx] * satd_ratio_threshold > cost_list[0]) {
 			break;
 		}
-		*/
+		
         int mode = mode_list[skip_idx];
 
         if (mode < num_cands_woUMVE) {
