@@ -717,18 +717,18 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	
 	float satd_ratio_threshold = 0.945;
 
-	/*
+	
 	if (cu_size_log2 <= 7) {
-		satd_ratio_threshold = 0.983;
+		satd_ratio_threshold = 0.95;
 	}
 	else if (cu_size_log2 <= 10) {
-		satd_ratio_threshold = 0.985;
+		satd_ratio_threshold = 0.96;
 	}
 	else {
-		satd_ratio_threshold = 0.99;
+		satd_ratio_threshold = 0.97;
 	}
-	*/
 	
+	/*
 	if (cu_size_log2 == 6) {
 		satd_ratio_threshold = 0.95;
 	}
@@ -756,7 +756,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	else if (cu_size_log2 == 14) {
 		satd_ratio_threshold = 0.979;
 	}
-	
+	*/
 	
 	// float satd_ratio_threshold = 0.945;
 
@@ -766,11 +766,14 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 			break;
 		}
 		*/
-		
+		if (info->rmv_skip_candi_by_satd && core->inter_satd != COM_UINT64_MAX && cost_list[skip_idx] * satd_ratio_threshold > core->inter_satd) {
+			break;
+		}
+		/*
 		if (skip_idx > 0 && cost_list[skip_idx] * satd_ratio_threshold > cost_list[0]) {
 			break;
 		}
-		
+		*/
         int mode = mode_list[skip_idx];
 
         if (mode < num_cands_woUMVE) {
