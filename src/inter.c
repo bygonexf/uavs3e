@@ -828,7 +828,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
             core->skip_emvr_mode[emvr_idx] = cost_skip < cost_dir;
         }
 
-		if (neighbor_skip_flag && skip_idx == 0 && mode == neighbor_skip_mode) {
+		if (neighbor_skip_flag && skip_idx < 3 && mode == neighbor_skip_mode && best_skip_idx == skip_idx) {
 			break;
 		}
     }
