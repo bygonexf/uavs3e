@@ -846,9 +846,15 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
             core->skip_emvr_mode[emvr_idx] = cost_skip < cost_dir;
         }
 
-		for (int neb_idx = 0; neb_idx < 3; ++neb_idx) {
-			if (valid_flag[neb_idx] && mode == neighbor_skip_mode[neb_idx]) {
-				printf("hit skip_idx:%d\t", skip_idx);
+		if (skip_idx == 0) {
+			int neb_same_mode_flag = 0;
+			for (int neb_idx = 0; neb_idx < 3; ++neb_idx) {
+				if (valid_flag[neb_idx] && mode == neighbor_skip_mode[neb_idx]) {
+					neb_same_mode_flag = 1;
+					break;
+				}
+			}
+			if (neb_same_mode_flag){
 				break;
 			}
 		}
