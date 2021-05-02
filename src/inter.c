@@ -890,9 +890,16 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 				if (valid_flag[neb_idx] && (neb_umve_dir[neb_idx] >= 0)) {
 					printf("neb_idx:%d,umve_dir:%d\t", neb_idx, neb_umve_dir[neb_idx]);
 				}
+				if (valid_flag[neb_idx] && (neighbor_skip_mode[neb_idx] < 4)) {
+					printf("neb_idx:%d,mode:%d\t", neb_idx, neighbor_skip_mode[neb_idx]);
+				}
 				if (valid_flag[neb_idx] && (cur_info->umve_flag) && (cur_info->umve_idx % 4 == neb_umve_dir[neb_idx])) {
 					neb_same_mode_flag ++;
-					printf("now_dir:%d\t", cur_info->umve_idx % 4);
+					printf("---hit_dir:%d\t", cur_info->umve_idx % 4);
+				}
+				if (valid_flag[neb_idx] && ((mode < 4 && (mode == neighbor_skip_mode[neb_idx])))) {
+					neb_same_mode_flag++;
+					printf("---hit_mode:%d\t", mode);
 				}
 			}
 			if (neb_same_mode_flag){
@@ -919,7 +926,12 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	printf("\n");
 	*/
 
-	printf("best_skip_idx:%d\tbest_mode:%d\n", best_skip_idx, mode_list[best_skip_idx]);
+	if (mode_list[best_skip_idx] >= num_cands_woUMVE) {
+		printf("best_skip_idx:%d\tdir:%d\n", best_skip_idx, (mode_list[best_skip_idx]-num_cands_woUMVE)%4);
+	}
+	else {
+		printf("best_skip_idx:%d\tbest_mode:%d\n", best_skip_idx, mode_list[best_skip_idx]);
+	}
 
 	return best_skip_idx;
 }
