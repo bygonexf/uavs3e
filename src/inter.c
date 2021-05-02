@@ -784,10 +784,6 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 		*/
         int mode = mode_list[skip_idx];
 
-		if (neighbor_skip_flag && skip_idx <= 3 && mode == neighbor_skip_mode) {
-			break;
-		}
-
         if (mode < num_cands_woUMVE) {
             cur_info->umve_flag = 0;
             cur_info->skip_idx = mode;
@@ -831,6 +827,10 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
         if (!cur_info->umve_flag && emvr_idx >= 0 && emvr_idx <= 4) {
             core->skip_emvr_mode[emvr_idx] = cost_skip < cost_dir;
         }
+
+		if (neighbor_skip_flag && skip_idx == 0 && mode == neighbor_skip_mode) {
+			break;
+		}
     }
     
 	/*
