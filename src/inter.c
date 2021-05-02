@@ -717,7 +717,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	
 	float satd_ratio_threshold = 0.945;
 
-	
+	/*
 	if (cu_size_log2 <= 7) {
 		satd_ratio_threshold = 0.94;
 	}
@@ -727,7 +727,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	else {
 		satd_ratio_threshold = 0.96;
 	}
-	
+	*/
 	/*
 	if (cu_size_log2 == 6) {
 		satd_ratio_threshold = 0.95;
@@ -761,14 +761,11 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	// float satd_ratio_threshold = 0.945;
 
     for (int skip_idx = 0; skip_idx < num_rdo; skip_idx++) {
-        /*
+        
 		if (info->rmv_skip_candi_by_satd && core->inter_satd != COM_UINT64_MAX && cost_list[skip_idx] > core->inter_satd * core->satd_threshold) {
 			break;
 		}
-		*/
-		if (info->rmv_skip_candi_by_satd && core->inter_satd != COM_UINT64_MAX && cost_list[skip_idx] * satd_ratio_threshold > core->inter_satd) {
-			break;
-		}
+		
 		/*
 		if (skip_idx > 0 && cost_list[skip_idx] * satd_ratio_threshold > cost_list[0]) {
 			break;
