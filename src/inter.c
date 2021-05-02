@@ -760,20 +760,34 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	
 	// float satd_ratio_threshold = 0.945;
 
+	int neb_addr[5];
+	int valid_flag[5];
+	int neighbor_skip_mode[5];
+	int i_scu = info->i_scu;
 	com_map_t* map = core->map;
 	com_scu_t* map_scu = map->map_scu;
 	int scup = core->cu_scup_in_pic;
 	int cu_width_in_scu = (core->cu_width_log2) >> MIN_CU_LOG2;
 	int cu_height_in_scu = (core->cu_height_log2) >> MIN_CU_LOG2;
-	int neb_addr = scup - info->i_scu - 1;
-	int inter_flag = COM_IS_INTER_SCU(map->map_scu[neb_addr]);
-	u8 neighbor_skip_mode = map->map_skipidx[neb_addr];
-	int neighbor_skip_flag = inter_flag && (neighbor_skip_mode >= 0);
+	// F
+	neb_addr[0] = scup + (cu_height_in_scu - 1) * i_scu - 1;
+	neighbor_skip_mode[0] = map->map_skipidx[neb_addr[0]];
+	valid_flag[0] = COM_IS_INTER_SCU(map_scu[neb_addr[0]]) && (neighbor_skip_mode[0] > 0);
+	// G
+	neb_addr[1] = scup - i_scu + cu_width_in_scu - 1;
+	neighbor_skip_mode[1] = map->map_skipidx[neb_addr[1]];
+	valid_flag[1] = COM_IS_INTER_SCU(map_scu[neb_addr[1]]) && (neighbor_skip_mode[1] > 0);
+	// C
+	neb_addr[2] = scup - i_scu + cu_width_in_scu;
+	neighbor_skip_mode[2] = map->map_skipidx[neb_addr[2]];
+	valid_flag[2] = COM_IS_INTER_SCU(map_scu[neb_addr[2]]) && (neighbor_skip_mode[2] > 0);
+	
+	/*
 	int neighbor_umve_dir = -1;
 	if (neighbor_skip_mode >= num_cands_woUMVE) {
 		neighbor_umve_dir = (neighbor_skip_mode - num_cands_woUMVE) % 4;
 	}
-
+	*/
 
     for (int skip_idx = 0; skip_idx < num_rdo; skip_idx++) {
         
@@ -832,8 +846,11 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
             core->skip_emvr_mode[emvr_idx] = cost_skip < cost_dir;
         }
 
-		if (neighbor_skip_flag && skip_idx == 0 && cur_info->umve_flag && (cur_info->umve_idx % 4 == neighbor_umve_dir)) {
-			break;
+		for (int neb_idx = 0; neb_idx < 3; ++neb_idx) {
+			if (valid_flag[neb_idx] && mode == neighbor_skip_mode[neb_idx]) {
+				printf("hit skip_idx:%d\t", skip_idx);
+				break;
+			}
 		}
     }
     
@@ -854,6 +871,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	}
 	printf("\n");
 	*/
+	printf("best_skip_idx£º%d\n", best_skip_idx);
 
 	return best_skip_idx;
 }
