@@ -765,10 +765,14 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	int scup = core->cu_scup_in_pic;
 	int cu_width_in_scu = (core->cu_width_log2) >> MIN_CU_LOG2;
 	int cu_height_in_scu = (core->cu_height_log2) >> MIN_CU_LOG2;
-	int neb_addr = scup + (cu_height_in_scu - 1) * (info->i_scu) - 1;
+	int neb_addr = scup - info->i_scu - 1;
 	int inter_flag = COM_IS_INTER_SCU(map->map_scu[neb_addr]);
 	u8 neighbor_skip_mode = map->map_skipidx[neb_addr];
 	int neighbor_skip_flag = inter_flag && (neighbor_skip_mode >= 0);
+	int neighbor_umve_dir = -1;
+	if (neighbor_skip_mode >= num_cands_woUMVE) {
+		neighbor_umve_dir = (neighbor_skip_mode - num_cands_woUMVE) % 4;
+	}
 
 
     for (int skip_idx = 0; skip_idx < num_rdo; skip_idx++) {
@@ -828,7 +832,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
             core->skip_emvr_mode[emvr_idx] = cost_skip < cost_dir;
         }
 
-		if (neighbor_skip_flag && skip_idx < 3 && mode == neighbor_skip_mode && best_skip_idx == skip_idx) {
+		if (neighbor_skip_flag && skip_idx == 0 && cur_info->umve_flag && (cur_info->umve_idx % 4 == neighbor_umve_dir)) {
 			break;
 		}
     }
