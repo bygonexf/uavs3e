@@ -811,6 +811,8 @@ static void update_map_scu(core_t *core, int x, int y, int src_cuw, int src_cuh)
     int map_offset = (y >> MIN_CU_LOG2) * i_dst + (x >> MIN_CU_LOG2);
     enc_cu_t *cu_data_bst = &core->cu_data_best[CONV_LOG2(src_cuw) - 2][CONV_LOG2(src_cuh) - 2];
 
+	printf("updateeee\n");
+
     com_scu_t *src_map_scu               = cu_data_bst->map_scu;
     s8      *src_map_ipm                 = cu_data_bst->ipm_l;
     s16    (*src_map_mv)[REFP_NUM][MV_D] = cu_data_bst->mv;
