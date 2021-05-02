@@ -148,6 +148,8 @@ typedef struct uavs3e_com_map_t {
     s8        *map_patch;
     u8        *map_edge;
 	u8        *map_skipidx;
+	u8        *map_umveflag;
+	u8        *map_umveidx;
 } com_map_t;
 
 typedef struct uavs3e_com_sao_param_t {

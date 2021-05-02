@@ -775,48 +775,48 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	neighbor_skip_mode[0] = map->map_skipidx[neb_addr[0]];
 	valid_flag[0] = COM_IS_INTER_SCU(map_scu[neb_addr[0]]) && (neighbor_skip_mode[0] > 0);
 	neb_umve_dir[0] = -1;
-	if (neighbor_skip_mode[0] >= num_cands_woUMVE) {
-		neb_umve_dir[0] = (neighbor_skip_mode[0] - num_cands_woUMVE) % 4;
+	if (map->map_umveflag[neb_addr[0]]) {
+		neb_umve_dir[0] = map->map_umveidx[neb_addr[0]] % 4;
 	}
 	// G
 	neb_addr[1] = scup - i_scu + cu_width_in_scu - 1;
 	neighbor_skip_mode[1] = map->map_skipidx[neb_addr[1]];
 	valid_flag[1] = COM_IS_INTER_SCU(map_scu[neb_addr[1]]) && (neighbor_skip_mode[1] > 0);
 	neb_umve_dir[1] = -1;
-	if (neighbor_skip_mode[1] >= num_cands_woUMVE) {
-		neb_umve_dir[1] = (neighbor_skip_mode[1] - num_cands_woUMVE) % 4;
+	if (map->map_umveflag[neb_addr[1]]) {
+		neb_umve_dir[1] = map->map_umveidx[neb_addr[1]] % 4;
 	}
 	// C
 	neb_addr[2] = scup - i_scu + cu_width_in_scu;
 	neighbor_skip_mode[2] = map->map_skipidx[neb_addr[2]];
 	valid_flag[2] = COM_IS_INTER_SCU(map_scu[neb_addr[2]]) && (neighbor_skip_mode[2] > 0);
 	neb_umve_dir[2] = -1;
-	if (neighbor_skip_mode[2] >= num_cands_woUMVE) {
-		neb_umve_dir[2] = (neighbor_skip_mode[2] - num_cands_woUMVE) % 4;
+	if (map->map_umveflag[neb_addr[2]]) {
+		neb_umve_dir[2] = map->map_umveidx[neb_addr[2]] % 4;
 	}
 	// A
 	neb_addr[3] = scup - 1;
 	neighbor_skip_mode[3] = map->map_skipidx[neb_addr[3]];
 	valid_flag[3] = COM_IS_INTER_SCU(map_scu[neb_addr[3]]) && (neighbor_skip_mode[3] > 0);
 	neb_umve_dir[3] = -1;
-	if (neighbor_skip_mode[3] >= num_cands_woUMVE) {
-		neb_umve_dir[3] = (neighbor_skip_mode[3] - num_cands_woUMVE) % 4;
+	if (map->map_umveflag[neb_addr[3]]) {
+		neb_umve_dir[3] = map->map_umveidx[neb_addr[3]] % 4;
 	}
 	// B
 	neb_addr[4] = scup - i_scu;
 	neighbor_skip_mode[4] = map->map_skipidx[neb_addr[4]];
 	valid_flag[4] = COM_IS_INTER_SCU(map_scu[neb_addr[4]]) && (neighbor_skip_mode[4] > 0);
 	neb_umve_dir[4] = -1;
-	if (neighbor_skip_mode[4] >= num_cands_woUMVE) {
-		neb_umve_dir[4] = (neighbor_skip_mode[4] - num_cands_woUMVE) % 4;
+	if (map->map_umveflag[neb_addr[4]]) {
+		neb_umve_dir[4] = map->map_umveidx[neb_addr[4]] % 4;
 	}
 	// D
 	neb_addr[5] = scup - i_scu - 1;
 	neighbor_skip_mode[5] = map->map_skipidx[neb_addr[5]];
 	valid_flag[5] = COM_IS_INTER_SCU(map_scu[neb_addr[5]]) && (neighbor_skip_mode[5] > 0);
 	neb_umve_dir[5] = -1;
-	if (neighbor_skip_mode[5] >= num_cands_woUMVE) {
-		neb_umve_dir[5] = (neighbor_skip_mode[5] - num_cands_woUMVE) % 4;
+	if (map->map_umveflag[neb_addr[5]]) {
+		neb_umve_dir[5] = map->map_umveidx[neb_addr[5]] % 4;
 	}
 	
 	/*
@@ -887,11 +887,12 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 			int neb_same_mode_flag = 0;
 			for (int neb_idx = 0; neb_idx < 6; ++neb_idx) {
 				//if (valid_flag[neb_idx] && ((mode < 4 && (mode == neighbor_skip_mode[neb_idx])) || (cur_info->umve_flag && (cur_info->umve_idx % 4 == neb_umve_dir[neb_idx])))) {
-				if (valid_flag[neb_idx] && (mode < 4) && (mode == neighbor_skip_mode[neb_idx])) {
+				if (valid_flag[neb_idx] && (cur_info->umve_flag) && (cur_info->umve_idx % 4 == neb_umve_dir[neb_idx])) {
 					neb_same_mode_flag ++;
+					break;
 				}
 			}
-			if (neb_same_mode_flag > 1){
+			if (neb_same_mode_flag){
 				break;
 			}
 		}
