@@ -821,6 +821,9 @@ static void update_map_scu(core_t *core, int x, int y, int src_cuw, int src_cuh)
     s8      *src_map_cud                 = cu_data_bst->qtd;
 	u8      *src_map_skipidx             = cu_data_bst->skip_idx;
 
+	printf("src_map_ipm:%d\t", *src_map_ipm);
+	printf("src_map_skipidx:%d\t", *src_map_skipidx);
+
     com_scu_t *dst_map_scu               = map->map_scu  + map_offset;
     s8      *dst_map_ipm                 = map->map_ipm  + map_offset;
     s16    (*dst_map_mv)[REFP_NUM][MV_D] = map->map_mv   + map_offset;
@@ -851,10 +854,7 @@ static void update_map_scu(core_t *core, int x, int y, int src_cuw, int src_cuh)
         COPY_ONE_DATA(dst_map_mv,   src_map_mv,      size_mv);
         COPY_ONE_DATA(dst_map_refi, src_map_refi,    size_refi);
         COPY_ONE_DATA(dst_map_cud,  src_map_cud,     size_cud);
-		if (cu_data_bst->skip_idx) {
-			COPY_ONE_DATA(dst_map_skipidx, src_map_skipidx, size_skipidx);
-		}
-		//COPY_ONE_DATA(dst_map_skipidx, src_map_skipidx, size_skipidx);
+		COPY_ONE_DATA(dst_map_skipidx, src_map_skipidx, size_skipidx);
 #undef COPY_ONE_DATA
     }
 
