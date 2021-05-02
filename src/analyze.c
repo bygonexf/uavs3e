@@ -854,6 +854,8 @@ static void update_map_scu(core_t *core, int x, int y, int src_cuw, int src_cuh)
 		COPY_ONE_DATA(dst_map_skipidx, src_map_skipidx, size_skipidx);
 #undef COPY_ONE_DATA
     }
+
+	printf("aftercopy\n");
 }
 
 static void clear_map_scu(core_t *core, int x, int y, int cu_width, int cu_height)
