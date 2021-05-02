@@ -811,8 +811,6 @@ static void update_map_scu(core_t *core, int x, int y, int src_cuw, int src_cuh)
     int map_offset = (y >> MIN_CU_LOG2) * i_dst + (x >> MIN_CU_LOG2);
     enc_cu_t *cu_data_bst = &core->cu_data_best[CONV_LOG2(src_cuw) - 2][CONV_LOG2(src_cuh) - 2];
 
-	printf("updateeee\n");
-
     com_scu_t *src_map_scu               = cu_data_bst->map_scu;
     s8      *src_map_ipm                 = cu_data_bst->ipm_l;
     s16    (*src_map_mv)[REFP_NUM][MV_D] = cu_data_bst->mv;
@@ -820,9 +818,6 @@ static void update_map_scu(core_t *core, int x, int y, int src_cuw, int src_cuh)
     u32     *src_map_cu_mode             = cu_data_bst->map_pos;
     s8      *src_map_cud                 = cu_data_bst->qtd;
 	u8      *src_map_skipidx             = cu_data_bst->skip_idx;
-
-	printf("src_map_ipm:%d\t", *src_map_ipm);
-	printf("src_map_skipidx:%d\t", *src_map_skipidx);
 
     com_scu_t *dst_map_scu               = map->map_scu  + map_offset;
     s8      *dst_map_ipm                 = map->map_ipm  + map_offset;
@@ -845,7 +840,6 @@ static void update_map_scu(core_t *core, int x, int y, int src_cuw, int src_cuh)
 
     assert(core->tree_status != TREE_C);
 
-	printf("copyyyyy\n");
     for (int i = 0; i < h; i++) {
 #define COPY_ONE_DATA(d,s,size) com_mcpy(d, s, size); d += i_dst; s += i_src;
         COPY_ONE_DATA(dst_map_scu,  src_map_scu,     size_scu);
@@ -857,8 +851,6 @@ static void update_map_scu(core_t *core, int x, int y, int src_cuw, int src_cuh)
 		COPY_ONE_DATA(dst_map_skipidx, src_map_skipidx, size_skipidx);
 #undef COPY_ONE_DATA
     }
-
-	printf("aftercopy\n");
 }
 
 static void clear_map_scu(core_t *core, int x, int y, int cu_width, int cu_height)

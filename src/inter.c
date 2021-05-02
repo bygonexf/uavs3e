@@ -760,6 +760,17 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	
 	// float satd_ratio_threshold = 0.945;
 
+	com_map_t* map = core->map;
+	com_scu_t* map_scu = map->map_scu;
+	int scup = core->cu_scup_in_pic;
+	int cu_width_in_scu = (core->cu_width_log2) >> MIN_CU_LOG2;
+	int cu_height_in_scu = (core->cu_height_log2) >> MIN_CU_LOG2;
+	int neb_addr = scup + (cu_height_in_scu - 1) * (info->i_scu) - 1;
+	int inter_flag = COM_IS_INTER_SCU(map->map_scu[neb_addr]);
+	u8 neighbor_skip_mode = map->map_skipidx[neb_addr];
+	int neighbor_skip_flag = inter_flag && (neighbor_skip_mode >= 0);
+
+
     for (int skip_idx = 0; skip_idx < num_rdo; skip_idx++) {
         
 		if (info->rmv_skip_candi_by_satd && core->inter_satd != COM_UINT64_MAX && cost_list[skip_idx] > core->inter_satd * core->satd_threshold) {
@@ -772,6 +783,10 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 		}
 		*/
         int mode = mode_list[skip_idx];
+
+		if (neighbor_skip_flag && skip_idx <= 3 && mode == neighbor_skip_mode) {
+			break;
+		}
 
         if (mode < num_cands_woUMVE) {
             cur_info->umve_flag = 0;
@@ -835,22 +850,6 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	}
 	printf("\n");
 	*/
-
-
-	printf("aaaaaa\n");
-	com_map_t* map = core->map;
-	com_scu_t* map_scu = map->map_scu;
-	int scup = core->cu_scup_in_pic;
-	int cu_width_in_scu = (core->cu_width_log2) >> MIN_CU_LOG2;
-	int cu_height_in_scu = (core->cu_height_log2) >> MIN_CU_LOG2;
-	int neb_addr = scup + (cu_height_in_scu - 1) * (info->i_scu) - 1;
-	int inter_flag = COM_IS_INTER_SCU(map->map_scu[neb_addr]);
-	u8 neighbor_skip_mode = map->map_skipidx[neb_addr];
-	if (inter_flag && neighbor_skip_mode >= 0) {
-		printf("neighbor_skipmode: %d\t", neighbor_skip_mode);
-	}
-	printf("skip_idx: %d\t", best_skip_idx);
-	printf("skip_mode: %d\n", mode_list[best_skip_idx]);
 
 	return best_skip_idx;
 }
