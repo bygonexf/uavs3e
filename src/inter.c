@@ -871,13 +871,15 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 			int neb_same_mode_flag = 0;
 			for (int neb_idx = 0; neb_idx < 3; ++neb_idx) {
 				//if (valid_flag[neb_idx] && ((mode < 4 && (mode == neighbor_skip_mode[neb_idx])) || (cur_info->umve_flag && (cur_info->umve_idx % 4 == neb_umve_dir[neb_idx])))) {
-				if (valid_flag[neb_idx] && ((cur_info->umve_flag && (cur_info->umve_idx % 4 == neb_umve_dir[neb_idx])))) {
+				if (valid_flag[neb_idx] && ((mode == neighbor_skip_mode[neb_idx]) || (cur_info->umve_flag && (cur_info->umve_idx % 4 == neb_umve_dir[neb_idx])))) {
 					neb_same_mode_flag = 1;
-					break;
+					printf("mode:%d\t", mode);
+					printf("neighbor_idx:%d\t", neb_idx);
+					// break;
 				}
 			}
 			if (neb_same_mode_flag && best_skip_idx == skip_idx){
-				break;
+				// break;
 			}
 		}
     }
@@ -899,6 +901,8 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	}
 	printf("\n");
 	*/
+
+	printf("best_skip_idx:%d\tbest_mode:%d\n", best_skip_idx, mode_list[best_skip_idx]);
 
 	return best_skip_idx;
 }
