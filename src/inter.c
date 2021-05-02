@@ -835,7 +835,21 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	}
 	printf("\n");
 	*/
-	
+
+	com_map_t* map = core->map;
+	com_scu_t* map_scu = map->map_scu;
+	int scup = core->cu_scup_in_pic;
+	int cu_width_in_scu = (core->cu_width_log2) >> MIN_CU_LOG2;
+	int cu_height_in_scu = (core->cu_height_log2) >> MIN_CU_LOG2;
+	int neb_addr = scup + (cu_height_in_scu - 1) * (info->i_scu) - 1;
+	int inter_flag = COM_IS_INTER_SCU(map->map_scu[neb_addr]);
+	u8 neighbor_skip_mode = map->map_skipidx[neb_addr];
+	if (inter_flag && neighbor_skip_mode >= 0) {
+		printf("neighbor_skipmode: %d\t", neighbor_skip_mode);
+	}
+	printf("skip_idx: %d\t", best_skip_idx);
+	printf("skip_mode: %d\n", mode_list[best_skip_idx]);
+
 	return best_skip_idx;
 }
 

@@ -817,6 +817,7 @@ static void update_map_scu(core_t *core, int x, int y, int src_cuw, int src_cuh)
     s8     (*src_map_refi)[REFP_NUM]     = cu_data_bst->refi;
     u32     *src_map_cu_mode             = cu_data_bst->map_pos;
     s8      *src_map_cud                 = cu_data_bst->qtd;
+	u8      *src_map_skipidx             = cu_data_bst->skip_idx;
 
     com_scu_t *dst_map_scu               = map->map_scu  + map_offset;
     s8      *dst_map_ipm                 = map->map_ipm  + map_offset;
@@ -824,6 +825,7 @@ static void update_map_scu(core_t *core, int x, int y, int src_cuw, int src_cuh)
     s8     (*dst_map_refi)[REFP_NUM]     = map->map_refi + map_offset;
     u32     *dst_map_pos                 = map->map_pos  + map_offset;
     s8      *dst_map_cud                 = map->map_cud  + map_offset;
+	u8      *dst_map_skipidx             = map->map_skipidx + map_offset;
 
     int w = COM_MIN(src_cuw, info->pic_width  - x) >> MIN_CU_LOG2;
     int h = COM_MIN(src_cuh, info->pic_height - y) >> MIN_CU_LOG2;
@@ -834,6 +836,7 @@ static void update_map_scu(core_t *core, int x, int y, int src_cuw, int src_cuh)
     int size_mv   = sizeof(      s16) * w * REFP_NUM * MV_D;
     int size_refi = sizeof(       s8) * w * REFP_NUM;
     int size_cud  = sizeof(       s8) * w;
+	int size_skipidx = sizeof(u8) * w;
 
     assert(core->tree_status != TREE_C);
 
@@ -845,6 +848,7 @@ static void update_map_scu(core_t *core, int x, int y, int src_cuw, int src_cuh)
         COPY_ONE_DATA(dst_map_mv,   src_map_mv,      size_mv);
         COPY_ONE_DATA(dst_map_refi, src_map_refi,    size_refi);
         COPY_ONE_DATA(dst_map_cud,  src_map_cud,     size_cud);
+		COPY_ONE_DATA(dst_map_skipidx, src_map_skipidx, size_skipidx);
 #undef COPY_ONE_DATA
     }
 }
