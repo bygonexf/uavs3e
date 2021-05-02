@@ -870,7 +870,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 		if (skip_idx == 0) {
 			int neb_same_mode_flag = 0;
 			for (int neb_idx = 0; neb_idx < 4; ++neb_idx) {
-				if (valid_flag[neb_idx] && (mode < 4 || (cur_info->umve_flag && (cur_info->umve_idx % 4 == neb_umve_dir[neb_idx]))) && mode == neighbor_skip_mode[neb_idx]) {
+				if (valid_flag[neb_idx] && ((mode < 4 && (mode == neighbor_skip_mode[neb_idx])) || (cur_info->umve_flag && (cur_info->umve_idx % 4 == neb_umve_dir[neb_idx])))) {
 					neb_same_mode_flag = 1;
 					break;
 				}
