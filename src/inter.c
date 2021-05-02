@@ -877,7 +877,6 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	}
 	printf("\n");
 	*/
-	printf("best_skip_idx£º%d\n", best_skip_idx);
 
 	return best_skip_idx;
 }
