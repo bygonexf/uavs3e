@@ -836,6 +836,8 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	printf("\n");
 	*/
 
+
+	printf("aaaaaa\n");
 	com_map_t* map = core->map;
 	com_scu_t* map_scu = map->map_scu;
 	int scup = core->cu_scup_in_pic;
