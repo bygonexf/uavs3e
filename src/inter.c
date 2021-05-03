@@ -87,9 +87,6 @@ static int make_cand_list(core_t *core, int *mode_list, u64 *cost_list, int num_
 
     cur_info->cu_mode = MODE_SKIP;
 
-	int cur_umve_dir = -1;
-	int pred_umve_dir = -1;
-
     for (int i = 0; i < num_rdo; i++) {
         mode_list[i] = 0;
         cost_list[i] = COM_UINT64_MAX;
@@ -105,11 +102,6 @@ static int make_cand_list(core_t *core, int *mode_list, u64 *cost_list, int num_
         } else {
             cur_info->umve_flag = 1;
             cur_info->umve_idx = skip_idx - num_cands_woUMVE;
-
-			cur_umve_dir = cur_info->umve_idx % 4;
-			if ((pred_umve_dir >= 0 && cur_umve_dir != pred_umve_dir) || (cur_info->umve_idx >= UMVE_MAX_REFINE_NUM && pred_umve_dir < 0)) {
-				continue;
-			}
         }
         if ((slice_type == SLICE_P) && (cur_info->skip_idx == 1 || cur_info->skip_idx == 2) && (cur_info->umve_flag == 0)) {
             continue;
@@ -135,10 +127,6 @@ static int make_cand_list(core_t *core, int *mode_list, u64 *cost_list, int num_
             }
             mode_list[num_rdo - shift] = skip_idx;
             cost_list[num_rdo - shift] = (u64)cost;
-
-			if (cur_info->umve_flag && pred_umve_dir < 0) {
-				pred_umve_dir = cur_umve_dir;
-			}
         }
     }
 
@@ -705,10 +693,11 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	num_rdo = make_cand_list(core, mode_list, cost_list, num_cands_woUMVE, num_cands_all, num_rdo, pmv_cands, refi_cands);
 
  
-	
+	/*
 	if (history->visit_mode_decision && info->history_skip_idx) {
         num_rdo = COM_MIN(num_rdo, history->skip_idx_history + 3);
     }
+	*/
 	
 	
 
@@ -761,11 +750,11 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	// float satd_ratio_threshold = 0.945;
 
     for (int skip_idx = 0; skip_idx < num_rdo; skip_idx++) {
-        
+        /*
 		if (info->rmv_skip_candi_by_satd && core->inter_satd != COM_UINT64_MAX && cost_list[skip_idx] > core->inter_satd * core->satd_threshold) {
 			break;
 		}
-		
+		*/
 		/*
 		if (skip_idx > 0 && cost_list[skip_idx] * satd_ratio_threshold > cost_list[0]) {
 			break;
@@ -818,7 +807,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
         }
     }
     
-	/*
+	
 	printf("\ncu_width:%d,", 1 << core->cu_width_log2);
 	printf("cu_height:%d,", 1 << core->cu_height_log2);
 	for (int i = 0; i < num_rdo; ++i) {
@@ -834,7 +823,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 		}
 	}
 	printf("\n");
-	*/
+	
 	
 	return best_skip_idx;
 }
