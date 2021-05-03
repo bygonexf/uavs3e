@@ -152,6 +152,12 @@ typedef struct uavs3e_com_map_t {
 	//u8        *map_umveidx;
 } com_map_t;
 
+typedef struct uavs3e_inter_mode_map_t {
+	u8        *map_skipidx;
+	u8        *map_umveflag;
+	u8        *map_umveidx;
+}inter_mode_map_t;
+
 typedef struct uavs3e_com_sao_param_t {
     int modeIdc; //NEW, MERGE, OFF
     int typeIdc; //NEW: EO_0, EO_90, EO_135, EO_45, BO. MERGE: left, above
