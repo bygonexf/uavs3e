@@ -783,6 +783,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	if (map->map_umveflag[neb_addr[2]]) {
 		neb_umve_dir[2] = map->map_umveidx[neb_addr[2]] % 4;
 	}
+	/*
 	// A
 	neb_addr[3] = scup - 1;
 	neighbor_skip_mode[3] = map->map_skipidx[neb_addr[3]];
@@ -807,6 +808,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	if (map->map_umveflag[neb_addr[5]]) {
 		neb_umve_dir[5] = map->map_umveidx[neb_addr[5]] % 4;
 	}
+	*/
 	
 
     for (int skip_idx = 0; skip_idx < num_rdo; skip_idx++) {
@@ -868,7 +870,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 
 		if (skip_idx < 1) {
 			int neb_same_mode_flag = 0;
-			for (int neb_idx = 0; neb_idx < 6; ++neb_idx) {
+			for (int neb_idx = 0; neb_idx < 3; ++neb_idx) {
 				/*
 				if (valid_flag[neb_idx] && (neb_umve_dir[neb_idx] >= 0)) {
 					printf("neb_idx:%d,umve_dir:%d\t", neb_idx, neb_umve_dir[neb_idx]);
