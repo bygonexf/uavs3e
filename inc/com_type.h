@@ -154,8 +154,8 @@ typedef struct uavs3e_com_map_t {
 
 typedef struct uavs3e_inter_mode_map_t {
 	u8        *map_skipidx;
-	u8        *map_umveflag;
-	u8        *map_umveidx;
+	//u8        *map_umveflag;
+	//u8        *map_umveidx;
 }inter_mode_map_t;
 
 typedef struct uavs3e_com_sao_param_t {

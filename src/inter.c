@@ -764,25 +764,31 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	neighbor_skip_mode[0] = map->map_skipidx[neb_addr[0]];
 	valid_flag[0] = COM_IS_INTER_SCU(map_scu[neb_addr[0]]) && (neighbor_skip_mode[0] > 0);
 	neb_umve_dir[0] = -1;
+	/*
 	if (map->map_umveflag[neb_addr[0]]) {
 		neb_umve_dir[0] = map->map_umveidx[neb_addr[0]] % 4;
 	}
+	*/
 	// G
 	neb_addr[1] = scup - i_scu + cu_width_in_scu - 1;
 	neighbor_skip_mode[1] = map->map_skipidx[neb_addr[1]];
 	valid_flag[1] = COM_IS_INTER_SCU(map_scu[neb_addr[1]]) && (neighbor_skip_mode[1] > 0);
 	neb_umve_dir[1] = -1;
+	/*
 	if (map->map_umveflag[neb_addr[1]]) {
 		neb_umve_dir[1] = map->map_umveidx[neb_addr[1]] % 4;
 	}
+	*/
 	// C
 	neb_addr[2] = scup - i_scu + cu_width_in_scu;
 	neighbor_skip_mode[2] = map->map_skipidx[neb_addr[2]];
 	valid_flag[2] = COM_IS_INTER_SCU(map_scu[neb_addr[2]]) && (neighbor_skip_mode[2] > 0);
 	neb_umve_dir[2] = -1;
+	/*
 	if (map->map_umveflag[neb_addr[2]]) {
 		neb_umve_dir[2] = map->map_umveidx[neb_addr[2]] % 4;
 	}
+	*/
 	/*
 	// A
 	neb_addr[3] = scup - 1;
@@ -888,7 +894,8 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 				}
 				*/
 
-				if (valid_flag[neb_idx] && ((mode < 4 && mode == neighbor_skip_mode[neb_idx]) || (cur_info->umve_flag && cur_info->umve_idx % 4 == neb_umve_dir[neb_idx])))
+				//if (valid_flag[neb_idx] && ((mode < 4 && mode == neighbor_skip_mode[neb_idx]) || (cur_info->umve_flag && cur_info->umve_idx % 4 == neb_umve_dir[neb_idx])))
+				if (valid_flag[neb_idx] && ((mode < 4 && mode == neighbor_skip_mode[neb_idx])))
 				{
 					neb_same_mode_flag = 1;
 					break;

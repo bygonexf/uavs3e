@@ -818,8 +818,8 @@ static void update_map_scu(core_t *core, int x, int y, int src_cuw, int src_cuh)
     u32     *src_map_cu_mode             = cu_data_bst->map_pos;
     s8      *src_map_cud                 = cu_data_bst->qtd;
 	u8      *src_map_skipidx             = cu_data_bst->skip_idx;
-	u8      *src_map_umveflag            = cu_data_bst->umve_flag;
-	u8      *src_map_umveidx             = cu_data_bst->umve_idx;
+	//u8      *src_map_umveflag            = cu_data_bst->umve_flag;
+	//u8      *src_map_umveidx             = cu_data_bst->umve_idx;
 
     com_scu_t *dst_map_scu               = map->map_scu  + map_offset;
     s8      *dst_map_ipm                 = map->map_ipm  + map_offset;
@@ -828,8 +828,8 @@ static void update_map_scu(core_t *core, int x, int y, int src_cuw, int src_cuh)
     u32     *dst_map_pos                 = map->map_pos  + map_offset;
     s8      *dst_map_cud                 = map->map_cud  + map_offset;
 	u8      *dst_map_skipidx             = core->inter_mode_map->map_skipidx + map_offset;
-	u8      *dst_map_umveflag            = core->inter_mode_map->map_umveflag + map_offset;
-	u8      *dst_map_umveidx             = core->inter_mode_map->map_umveidx + map_offset;
+	//u8      *dst_map_umveflag            = core->inter_mode_map->map_umveflag + map_offset;
+	//u8      *dst_map_umveidx             = core->inter_mode_map->map_umveidx + map_offset;
 
     int w = COM_MIN(src_cuw, info->pic_width  - x) >> MIN_CU_LOG2;
     int h = COM_MIN(src_cuh, info->pic_height - y) >> MIN_CU_LOG2;
@@ -841,8 +841,8 @@ static void update_map_scu(core_t *core, int x, int y, int src_cuw, int src_cuh)
     int size_refi = sizeof(       s8) * w * REFP_NUM;
     int size_cud  = sizeof(       s8) * w;
 	int size_skipidx = sizeof(    u8) * w;
-	int size_umveflag = sizeof(u8) * w;
-	int size_umveidx = sizeof(u8) * w;
+	//int size_umveflag = sizeof(u8) * w;
+	//int size_umveidx = sizeof(u8) * w;
 
     assert(core->tree_status != TREE_C);
 
@@ -855,8 +855,8 @@ static void update_map_scu(core_t *core, int x, int y, int src_cuw, int src_cuh)
         COPY_ONE_DATA(dst_map_refi, src_map_refi,    size_refi);
         COPY_ONE_DATA(dst_map_cud,  src_map_cud,     size_cud);
 		COPY_ONE_DATA(dst_map_skipidx, src_map_skipidx, size_skipidx);
-		COPY_ONE_DATA(dst_map_umveflag, src_map_umveflag, size_umveflag);
-		COPY_ONE_DATA(dst_map_umveidx, src_map_umveidx, size_umveidx);
+		//COPY_ONE_DATA(dst_map_umveflag, src_map_umveflag, size_umveflag);
+		//COPY_ONE_DATA(dst_map_umveidx, src_map_umveidx, size_umveidx);
 #undef COPY_ONE_DATA
     }
 }
