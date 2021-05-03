@@ -748,14 +748,14 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	
 	// float satd_ratio_threshold = 0.945;
 
-	/*
+	
 	int neb_addr[6];
 	int valid_flag[6];
 	int neighbor_skip_mode[6];
 	int neb_umve_dir[6];
 	int i_scu = info->i_scu;
-	com_map_t* map = core->map;
-	com_scu_t* map_scu = map->map_scu;
+	inter_mode_map_t* map = core->inter_mode_map;
+	com_scu_t* map_scu = core->map->map_scu;
 	int scup = core->cu_scup_in_pic;
 	int cu_width_in_scu = (core->cu_width_log2) >> MIN_CU_LOG2;
 	int cu_height_in_scu = (core->cu_height_log2) >> MIN_CU_LOG2;
@@ -807,14 +807,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	if (map->map_umveflag[neb_addr[5]]) {
 		neb_umve_dir[5] = map->map_umveidx[neb_addr[5]] % 4;
 	}
-	*/
 	
-	/*
-	int neighbor_umve_dir = -1;
-	if (neighbor_skip_mode >= num_cands_woUMVE) {
-		neighbor_umve_dir = (neighbor_skip_mode - num_cands_woUMVE) % 4;
-	}
-	*/
 
     for (int skip_idx = 0; skip_idx < num_rdo; skip_idx++) {
         
@@ -876,7 +869,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 		if (skip_idx < 1) {
 			int neb_same_mode_flag = 0;
 			for (int neb_idx = 0; neb_idx < 6; ++neb_idx) {
-				/*
+				
 				if (valid_flag[neb_idx] && (neb_umve_dir[neb_idx] >= 0)) {
 					printf("neb_idx:%d,umve_dir:%d\t", neb_idx, neb_umve_dir[neb_idx]);
 				}
@@ -891,7 +884,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 					neb_same_mode_flag++;
 					printf("---hit_mode:%d\t", mode);
 				}
-				*/
+				
 			}
 			if (neb_same_mode_flag){
 				//break;
@@ -917,14 +910,14 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	}
 	printf("\n");
 	*/
-	/*
+	
 	if (mode_list[best_skip_idx] >= num_cands_woUMVE) {
 		printf("best_skip_idx:%d\tdir:%d\n", best_skip_idx, (mode_list[best_skip_idx]-num_cands_woUMVE)%4);
 	}
 	else {
 		printf("best_skip_idx:%d\tbest_mode:%d\n", best_skip_idx, mode_list[best_skip_idx]);
 	}
-	*/
+	
 
 	return best_skip_idx;
 }
