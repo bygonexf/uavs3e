@@ -138,9 +138,9 @@ static enc_pic_t *pic_enc_alloc(com_info_t *info)
     GIVE_BUFFER(ep->map.map_patch  , buf, sizeof(s8       ) * info->f_scu); ep->map.map_patch += info->i_scu + 1;
     GIVE_BUFFER(ep->map.map_pos    , buf, sizeof(u32      ) * info->f_scu); ep->map.map_pos   += info->i_scu + 1;
     GIVE_BUFFER(ep->linebuf_intra  , buf, sizeof(pel     *) * 3 * info->pic_height_in_lcu);
-	GIVE_BUFFER(ep->map.map_skipidx, buf, sizeof(u8       ) * info->f_lcu); ep->map.map_skipidx += info->i_scu + 1;
-	GIVE_BUFFER(ep->map.map_umveflag, buf, sizeof(u8) * info->f_lcu); ep->map.map_umveflag += info->i_scu + 1;
-	GIVE_BUFFER(ep->map.map_umveidx, buf, sizeof(u8) * info->f_lcu); ep->map.map_umveidx += info->i_scu + 1;
+	//GIVE_BUFFER(ep->map.map_skipidx, buf, sizeof(u8       ) * info->f_lcu); ep->map.map_skipidx += info->i_scu + 1;
+	//GIVE_BUFFER(ep->map.map_umveflag, buf, sizeof(u8) * info->f_lcu); ep->map.map_umveflag += info->i_scu + 1;
+	//GIVE_BUFFER(ep->map.map_umveidx, buf, sizeof(u8) * info->f_lcu); ep->map.map_umveidx += info->i_scu + 1;
 
     for (int i = 0; i < info->pic_height_in_lcu; i++) {
         GIVE_BUFFER(ep->linebuf_intra[i][0], buf, sizeof(pel) *(info->pic_width + MAX_CU_SIZE + 1));
@@ -1010,9 +1010,9 @@ void *enc_pic_thread(enc_pic_t *ep, pic_thd_param_t *p)
     com_mset_x64a(map->map_patch - info->i_scu - 1,  0, sizeof(u8       ) * info->f_scu);
     // map_cud
     com_mset_x64a(map->map_cud   - info->i_scu - 1, -1, sizeof(s8       ) * info->f_scu);
-	com_mset_x64a(map->map_skipidx - info->i_scu - 1, -1, sizeof(u8) * info->f_scu);
-	com_mset_x64a(map->map_umveflag - info->i_scu - 1, -1, sizeof(u8) * info->f_scu);
-	com_mset_x64a(map->map_umveidx - info->i_scu - 1, -1, sizeof(u8) * info->f_scu);
+	//com_mset_x64a(map->map_skipidx - info->i_scu - 1, -1, sizeof(u8) * info->f_scu);
+	//com_mset_x64a(map->map_umveflag - info->i_scu - 1, -1, sizeof(u8) * info->f_scu);
+	//com_mset_x64a(map->map_umveidx - info->i_scu - 1, -1, sizeof(u8) * info->f_scu);
 
     pathdr.fixed_slice_qp_flag = pichdr->fixed_picture_qp_flag;
     pathdr.slice_qp = pic_org->picture_qp;

@@ -677,7 +677,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
     num_rdo = num_cands_woUMVE;
     assert(num_rdo <= COM_MIN(MAX_INTER_SKIP_RDO, TRADITIONAL_SKIP_NUM + info->sqh.num_of_hmvp));
 
-	int cu_size_log2 = core->cu_width_log2 + core->cu_height_log2;
+	// int cu_size_log2 = core->cu_width_log2 + core->cu_height_log2;
 	/*
 	if (cu_size_log2 == 6) {
 		num_rdo = 9;
@@ -703,7 +703,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
     memset(core->skip_emvr_mode, 0, sizeof(core->skip_emvr_mode));
 
 	
-	float satd_ratio_threshold = 0.945;
+	// float satd_ratio_threshold = 0.945;
 
 	/*
 	if (cu_size_log2 <= 7) {
@@ -748,6 +748,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	
 	// float satd_ratio_threshold = 0.945;
 
+	/*
 	int neb_addr[6];
 	int valid_flag[6];
 	int neighbor_skip_mode[6];
@@ -806,6 +807,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	if (map->map_umveflag[neb_addr[5]]) {
 		neb_umve_dir[5] = map->map_umveidx[neb_addr[5]] % 4;
 	}
+	*/
 	
 	/*
 	int neighbor_umve_dir = -1;
@@ -895,6 +897,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 				//break;
 			}
 		}
+		
     }
     
 	/*
