@@ -87,9 +87,6 @@ static int make_cand_list(core_t *core, int *mode_list, u64 *cost_list, int num_
 
     cur_info->cu_mode = MODE_SKIP;
 
-	int cur_umve_dir = -1;
-	int pred_umve_dir = -1;
-
     for (int i = 0; i < num_rdo; i++) {
         mode_list[i] = 0;
         cost_list[i] = COM_UINT64_MAX;
@@ -105,11 +102,6 @@ static int make_cand_list(core_t *core, int *mode_list, u64 *cost_list, int num_
         } else {
             cur_info->umve_flag = 1;
             cur_info->umve_idx = skip_idx - num_cands_woUMVE;
-
-			cur_umve_dir = cur_info->umve_idx % 4;
-			if ((pred_umve_dir >= 0 && cur_umve_dir != pred_umve_dir) || (cur_info->umve_idx >= UMVE_MAX_REFINE_NUM && pred_umve_dir < 0)) {
-				continue;
-			}
         }
         if ((slice_type == SLICE_P) && (cur_info->skip_idx == 1 || cur_info->skip_idx == 2) && (cur_info->umve_flag == 0)) {
             continue;
@@ -135,10 +127,6 @@ static int make_cand_list(core_t *core, int *mode_list, u64 *cost_list, int num_
             }
             mode_list[num_rdo - shift] = skip_idx;
             cost_list[num_rdo - shift] = (u64)cost;
-
-			if (cur_info->umve_flag && pred_umve_dir < 0) {
-				pred_umve_dir = cur_umve_dir;
-			}
         }
     }
 
