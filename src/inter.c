@@ -677,7 +677,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
     num_rdo = num_cands_woUMVE;
     assert(num_rdo <= COM_MIN(MAX_INTER_SKIP_RDO, TRADITIONAL_SKIP_NUM + info->sqh.num_of_hmvp));
 
-	// int cu_size_log2 = core->cu_width_log2 + core->cu_height_log2;
+	int cu_size_log2 = core->cu_width_log2 + core->cu_height_log2;
 	/*
 	if (cu_size_log2 == 6) {
 		num_rdo = 9;
@@ -703,9 +703,9 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
     memset(core->skip_emvr_mode, 0, sizeof(core->skip_emvr_mode));
 
 	
-	// float satd_ratio_threshold = 0.945;
+	float satd_ratio_threshold = 0.945;
 
-	/*
+	
 	if (cu_size_log2 <= 7) {
 		satd_ratio_threshold = 0.94;
 	}
@@ -715,7 +715,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	else {
 		satd_ratio_threshold = 0.96;
 	}
-	*/
+	
 	/*
 	if (cu_size_log2 == 6) {
 		satd_ratio_threshold = 0.95;
@@ -818,16 +818,16 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	
 
     for (int skip_idx = 0; skip_idx < num_rdo; skip_idx++) {
-        
+        /*
 		if (info->rmv_skip_candi_by_satd && core->inter_satd != COM_UINT64_MAX && cost_list[skip_idx] > core->inter_satd * core->satd_threshold) {
 			break;
 		}
+		*/
 		
-		/*
 		if (skip_idx > 0 && cost_list[skip_idx] * satd_ratio_threshold > cost_list[0]) {
 			break;
 		}
-		*/
+		
         int mode = mode_list[skip_idx];
 
         if (mode < num_cands_woUMVE) {
