@@ -1163,12 +1163,14 @@ void *enc_pic_thread(enc_pic_t *ep, pic_thd_param_t *p)
 	for (int i = 0; i < info->f_scu; i++) {
 		core->inter_mode_map->map_skipidx[i] = -1;
 	}
+	/*
 	for (int i = 0; i < info->f_scu; i++) {
 		core->inter_mode_map->map_umveflag[i] = -1;
 	}
 	for (int i = 0; i < info->f_scu; i++) {
 		core->inter_mode_map->map_umveidx[i] = -1;
 	}
+	*/
 
 
 
