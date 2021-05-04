@@ -677,7 +677,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
     num_rdo = num_cands_woUMVE;
     assert(num_rdo <= COM_MIN(MAX_INTER_SKIP_RDO, TRADITIONAL_SKIP_NUM + info->sqh.num_of_hmvp));
 
-	int cu_size_log2 = core->cu_width_log2 + core->cu_height_log2;
+	//int cu_size_log2 = core->cu_width_log2 + core->cu_height_log2;
 	/*
 	if (cu_size_log2 == 6) {
 		num_rdo = 9;
@@ -702,7 +702,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 
     memset(core->skip_emvr_mode, 0, sizeof(core->skip_emvr_mode));
 
-	
+	/*
 	float satd_ratio_threshold = 0.945;
 
 	
@@ -715,6 +715,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	else {
 		satd_ratio_threshold = 0.96;
 	}
+	*/
 	
 	/*
 	if (cu_size_log2 == 6) {
@@ -888,22 +889,24 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 				}
 				*/
 
+				/*
 				if (valid_flag[neb_idx] && ((mode < 4 && (mode == neighbor_skip_mode[neb_idx])))) {
 					printf("neb_idx:%d,mode:%d,", neb_idx, neighbor_skip_mode[neb_idx]);
 				}
 				if (valid_flag[neb_idx] && (cur_info->umve_flag) && (cur_info->umve_idx % UMVE_MAX_REFINE_NUM == neb_umve_idx[neb_idx])) {
 					printf("neb_idx:%d,umve:%d,", neb_idx, neb_umve_idx[neb_idx]);
 				}
+				*/
 
 				if (valid_flag[neb_idx] && ((mode < 4 && mode == neighbor_skip_mode[neb_idx]) || (cur_info->umve_flag && (cur_info->umve_idx % UMVE_MAX_REFINE_NUM == neb_umve_idx[neb_idx]))))
 				//if (valid_flag[neb_idx] && ((mode < 4 && mode == neighbor_skip_mode[neb_idx])))
 				{
 					neb_same_mode_flag = 1;
-					//break;
+					break;
 				}
 			}
 			if (neb_same_mode_flag){
-				//break;
+				break;
 			}
 		}
 		
@@ -935,7 +938,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 		printf("best_skip_idx:%d\tbest_mode:%d\n", best_skip_idx, mode_list[best_skip_idx]);
 	}
 	*/
-
+	/*
 	if (neb_same_mode_flag) {
 		if (mode_list[best_skip_idx] >= num_cands_woUMVE) {
 			printf("best_skip_idx:%d,umve:%d\n", best_skip_idx, (mode_list[best_skip_idx] - num_cands_woUMVE) % UMVE_MAX_REFINE_NUM);
@@ -944,6 +947,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 			printf("best_skip_idx:%d,mode:%d\n", best_skip_idx, mode_list[best_skip_idx]);
 		}
 	}
+	*/
 
 	return best_skip_idx;
 }
