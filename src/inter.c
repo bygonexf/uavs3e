@@ -759,7 +759,6 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	int scup = core->cu_scup_in_pic;
 	int cu_width_in_scu = (core->cu_width_log2) >> MIN_CU_LOG2;
 	int cu_height_in_scu = (core->cu_height_log2) >> MIN_CU_LOG2;
-	int neb_umve_idx = 0;
 	// F
 	neb_addr[0] = scup + (cu_height_in_scu - 1) * i_scu - 1;
 	neighbor_skip_mode[0] = map->map_skipidx[neb_addr[0]];
