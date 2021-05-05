@@ -677,7 +677,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
     num_rdo = num_cands_woUMVE;
     assert(num_rdo <= COM_MIN(MAX_INTER_SKIP_RDO, TRADITIONAL_SKIP_NUM + info->sqh.num_of_hmvp));
 
-	//int cu_size_log2 = core->cu_width_log2 + core->cu_height_log2;
+	int cu_size_log2 = core->cu_width_log2 + core->cu_height_log2;
 	/*
 	if (cu_size_log2 == 6) {
 		num_rdo = 9;
@@ -702,10 +702,10 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 
     memset(core->skip_emvr_mode, 0, sizeof(core->skip_emvr_mode));
 
-	/*
+	
 	float satd_ratio_threshold = 0.945;
 
-	
+	/*
 	if (cu_size_log2 <= 7) {
 		satd_ratio_threshold = 0.94;
 	}
@@ -717,39 +717,40 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	}
 	*/
 	
-	/*
+	
 	if (cu_size_log2 == 6) {
-		satd_ratio_threshold = 0.95;
+		satd_ratio_threshold = 0.9477;
 	}
 	else if (cu_size_log2 == 7) {
-		satd_ratio_threshold = 0.96;
+		satd_ratio_threshold = 0.9633;
 	}
 	else if (cu_size_log2 == 8) {
-		satd_ratio_threshold = 0.968;
+		satd_ratio_threshold = 0.9726;
 	}
 	else if (cu_size_log2 == 9) {
-		satd_ratio_threshold = 0.9727;
+		satd_ratio_threshold = 0.97825;
 	}
 	else if (cu_size_log2 == 10) {
-		satd_ratio_threshold = 0.9755;
+		satd_ratio_threshold = 0.9816;
 	}
 	else if (cu_size_log2 == 11) {
-		satd_ratio_threshold = 0.9773;
+		satd_ratio_threshold = 0.9841;
 	}
 	else if (cu_size_log2 == 12) {
-		satd_ratio_threshold = 0.978;
+		satd_ratio_threshold = 0.9856;
 	}
 	else if (cu_size_log2 == 13) {
-		satd_ratio_threshold = 0.9785;
+		satd_ratio_threshold = 0.9864;
 	}
 	else if (cu_size_log2 == 14) {
-		satd_ratio_threshold = 0.979;
+		satd_ratio_threshold = 0.9868;
 	}
-	*/
+	
 	
 	// float satd_ratio_threshold = 0.945;
 
 	
+	/*
 	int neb_addr[6];
 	int valid_flag[6];
 	int neighbor_skip_mode[6];
@@ -764,62 +765,63 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 	neb_addr[0] = scup + (cu_height_in_scu - 1) * i_scu - 1;
 	neighbor_skip_mode[0] = map->map_skipidx[neb_addr[0]];
 	valid_flag[0] = COM_IS_INTER_SCU(map_scu[neb_addr[0]]) && (neighbor_skip_mode[0] >= 0);
-	/*
+	
 	neb_umve_idx[0] = -1;
 	if (map->map_umveflag[neb_addr[0]]) {
 		neb_umve_idx[0] = map->map_umveidx[neb_addr[0]] % UMVE_MAX_REFINE_NUM;
 	}
-	*/
+	
 	// G
 	neb_addr[1] = scup - i_scu + cu_width_in_scu - 1;
 	neighbor_skip_mode[1] = map->map_skipidx[neb_addr[1]];
 	valid_flag[1] = COM_IS_INTER_SCU(map_scu[neb_addr[1]]) && (neighbor_skip_mode[1] >= 0);
-	/*
+	
 	neb_umve_idx[1] = -1;
 	if (map->map_umveflag[neb_addr[1]]) {
 		neb_umve_idx[1] = map->map_umveidx[neb_addr[1]] % UMVE_MAX_REFINE_NUM;
 	}
-	*/
+	
 	// C
 	neb_addr[2] = scup - i_scu + cu_width_in_scu;
 	neighbor_skip_mode[2] = map->map_skipidx[neb_addr[2]];
 	valid_flag[2] = COM_IS_INTER_SCU(map_scu[neb_addr[2]]) && (neighbor_skip_mode[2] >= 0);
-	/*
+	
 	neb_umve_idx[2] = -1;
 	if (map->map_umveflag[neb_addr[2]]) {
 		neb_umve_idx[2] = map->map_umveidx[neb_addr[2]] % UMVE_MAX_REFINE_NUM;
 	}
-	*/
+	
 
 	// A
 	neb_addr[3] = scup - 1;
 	neighbor_skip_mode[3] = map->map_skipidx[neb_addr[3]];
 	valid_flag[3] = COM_IS_INTER_SCU(map_scu[neb_addr[3]]) && (neighbor_skip_mode[3] >= 0);
-	/*
+	
 	neb_umve_idx[3] = -1;
 	if (map->map_umveflag[neb_addr[3]]) {
 		neb_umve_idx[3] = map->map_umveidx[neb_addr[3]] % UMVE_MAX_REFINE_NUM;
 	}
-	*/
+	
 	// B
 	neb_addr[4] = scup - i_scu;
 	neighbor_skip_mode[4] = map->map_skipidx[neb_addr[4]];
 	valid_flag[4] = COM_IS_INTER_SCU(map_scu[neb_addr[4]]) && (neighbor_skip_mode[4] >= 0);
-	/*
+	
 	neb_umve_idx[4] = -1;
 	if (map->map_umveflag[neb_addr[4]]) {
 		neb_umve_idx[4] = map->map_umveidx[neb_addr[4]] % UMVE_MAX_REFINE_NUM;
 	}
-	*/
+	
 	// D
 	neb_addr[5] = scup - i_scu - 1;
 	neighbor_skip_mode[5] = map->map_skipidx[neb_addr[5]] % UMVE_MAX_REFINE_NUM;
 	valid_flag[5] = COM_IS_INTER_SCU(map_scu[neb_addr[5]]) && (neighbor_skip_mode[5] >= 0);
-	/*
+	
 	neb_umve_idx[5] = -1;
 	if (map->map_umveflag[neb_addr[5]]) {
 		neb_umve_idx[5] = map->map_umveidx[neb_addr[5]];
 	}
+	
 	*/
 	
 	
@@ -830,11 +832,11 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 			break;
 		}
 		*/
-		/*
+		
 		if (skip_idx > 0 && cost_list[skip_idx] * satd_ratio_threshold > cost_list[0]) {
 			break;
 		}
-		*/
+		
         int mode = mode_list[skip_idx];
 
         if (mode < num_cands_woUMVE) {
@@ -881,10 +883,11 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
             core->skip_emvr_mode[emvr_idx] = cost_skip < cost_dir;
         }
 
+		/*
 		if (skip_idx < 1) {
 			//int neb_same_mode_flag = 0;
 			for (int neb_idx = 0; neb_idx < 6; ++neb_idx) {
-				/*
+				
 				if (valid_flag[neb_idx] && (neb_umve_dir[neb_idx] >= 0)) {
 					printf("neb_idx:%d,umve_dir:%d\t", neb_idx, neb_umve_dir[neb_idx]);
 				}
@@ -899,16 +902,16 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 					neb_same_mode_flag++;
 					printf("---hit_mode:%d\t", mode);
 				}
-				*/
+				
 
-				/*
+				
 				if (valid_flag[neb_idx] && ((mode < 4 && (mode == neighbor_skip_mode[neb_idx])))) {
 					printf("neb_idx:%d,mode:%d,", neb_idx, neighbor_skip_mode[neb_idx]);
 				}
 				if (valid_flag[neb_idx] && (cur_info->umve_flag) && (cur_info->umve_idx % UMVE_MAX_REFINE_NUM == neb_umve_idx[neb_idx])) {
 					printf("neb_idx:%d,umve:%d,", neb_idx, neb_umve_idx[neb_idx]);
 				}
-				*/
+				
 
 				//if (valid_flag[neb_idx] && ((mode < 4 && mode == neighbor_skip_mode[neb_idx]) || (cur_info->umve_flag && (cur_info->umve_idx % UMVE_MAX_REFINE_NUM == neb_umve_idx[neb_idx]))))
 				if (valid_flag[neb_idx] && ((mode < 4 && mode == neighbor_skip_mode[neb_idx])))
@@ -921,6 +924,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 				break;
 			}
 		}
+		*/
 		
     }
     
