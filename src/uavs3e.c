@@ -70,9 +70,9 @@ static core_t *core_alloc(com_info_t *info)
     core->sao_src_buf[2] = com_malloc(c_size);
     com_assert_rv(core->sao_src_buf[2], NULL);
 
-	//core->inter_mode_map = com_malloc(1 * sizeof(u8) * info->f_scu);
-	//core->inter_mode_map->map_skipidx = com_malloc(sizeof(u8) * info->f_scu);
-	//com_assert_rv(core->inter_mode_map->map_skipidx, NULL);
+	core->inter_mode_map = com_malloc(1 * sizeof(u8) * info->f_scu);
+	core->inter_mode_map->map_skipidx = com_malloc(sizeof(u8) * info->f_scu);
+	com_assert_rv(core->inter_mode_map->map_skipidx, NULL);
 	/*
 	core->inter_mode_map->map_umveflag = com_malloc(sizeof(u8) * info->f_scu);
 	com_assert_rv(core->inter_mode_map->map_umveflag, NULL);
@@ -97,10 +97,10 @@ static void core_free(core_t *core)
     com_mfree(core->sao_src_buf[1]);
     com_mfree(core->sao_src_buf[2]);
 
-	//com_mfree(core->inter_mode_map->map_skipidx);
+	com_mfree(core->inter_mode_map->map_skipidx);
 	//com_mfree(core->inter_mode_map->map_umveflag);
 	//com_mfree(core->inter_mode_map->map_umveidx);
-	//com_mfree(core->inter_mode_map);
+	com_mfree(core->inter_mode_map);
 
     com_mfree(core);
 }
@@ -1162,11 +1162,11 @@ void *enc_pic_thread(enc_pic_t *ep, pic_thd_param_t *p)
 	//com_mset_x64a(core->inter_mode_map->map_skipidx - info->i_scu - 1, -1, sizeof(u8)* info->f_scu);
 	//com_mset_x64a(core->inter_mode_map->map_umveflag - info->i_scu - 1, -1, sizeof(u8)* info->f_scu);
 	//com_mset_x64a(core->inter_mode_map->map_umveidx - info->i_scu - 1, -1, sizeof(u8)* info->f_scu);
-	/*
+	
 	for (int i = 0; i < info->f_scu; i++) {
 		core->inter_mode_map->map_skipidx[i] = -1;
 	}
-	*/
+	
 	/*
 	for (int i = 0; i < info->f_scu; i++) {
 		core->inter_mode_map->map_umveflag[i] = -1;

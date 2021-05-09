@@ -358,7 +358,7 @@ typedef struct uavs3e_core_t {
     u8             skip_emvr_mode[5];
 
 	// inter mode map
-	// inter_mode_map_t *inter_mode_map;
+	inter_mode_map_t *inter_mode_map;
 } core_t;
 
 typedef struct uavs3e_enc_pic_t {
