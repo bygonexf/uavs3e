@@ -832,9 +832,11 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 			break;
 		}
 		*/
+		/*
 		if (skip_idx > 0 && cost_list[skip_idx] * satd_ratio_threshold > cost_list[0]) {
 			break;
 		}
+		*/
 		
         int mode = mode_list[skip_idx];
 
@@ -884,8 +886,9 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 
 
 		
-		if (skip_idx < 1) {
+		if (skip_idx < 6) {
 			//int neb_same_mode_flag = 0;
+			neb_same_mode_flag = 0;
 			for (int neb_idx = 0; neb_idx < 6; ++neb_idx) {
 				/*
 				if (valid_flag[neb_idx] && (neb_umve_dir[neb_idx] >= 0)) {
@@ -920,7 +923,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 					break;
 				}
 			}
-			if (neb_same_mode_flag){
+			if (neb_same_mode_flag && best_skip_idx == skip_idx){
 				break;
 			}
 		}
