@@ -886,10 +886,10 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 
 
 		
-		if (skip_idx < 6) {
+		if (skip_idx < 1) {
 			//int neb_same_mode_flag = 0;
 			neb_same_mode_flag = 0;
-			for (int neb_idx = 0; neb_idx < 6; ++neb_idx) {
+			for (int neb_idx = 0; neb_idx < 3; ++neb_idx) {
 				/*
 				if (valid_flag[neb_idx] && (neb_umve_dir[neb_idx] >= 0)) {
 					printf("neb_idx:%d,umve_dir:%d\t", neb_idx, neb_umve_dir[neb_idx]);
@@ -923,7 +923,7 @@ static int analyze_direct_skip(core_t *core, lbac_t *lbac_best)
 					break;
 				}
 			}
-			if (neb_same_mode_flag && best_skip_idx == skip_idx){
+			if (neb_same_mode_flag){
 				break;
 			}
 		}
